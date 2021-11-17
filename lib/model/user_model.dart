@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 class UserModel {
   int id;
@@ -6,7 +6,7 @@ class UserModel {
   String email;
   String username;
 
-  UserModel({this.id, this.name, this.username, this.email});
+  UserModel({this.id, this.name,this.username,  this.email});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

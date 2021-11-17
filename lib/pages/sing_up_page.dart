@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
@@ -250,19 +250,21 @@ class SingupPage extends StatelessWidget {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              header(),
-              name(),
-              username(),
-              email(),
-              password(),
-              singupBotton(),
-              login(),
-            ],
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                header(),
+                name(),
+                username(),
+                email(),
+                password(),
+                singupBotton(),
+                login(),
+              ],
+            ),
           ),
         ),
       ),

@@ -12,12 +12,33 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> register(
-      {String name, String username, String email, String password}) async {
+  Future<bool> register({
+    String name, 
+    String username,
+    String email, 
+    String password
+    }) async {
     try {
-      UserModel user = await AuthService().register(
-          name: name, username: username, email: email, password: password);
+      UserModel user = await AuthService()
+          .register(name: name, email: email, password: password);
       _user = user;
+
+      return true;
+      
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> login({String email, String password}) async {
+    try {
+      UserModel user =
+          await AuthService().login(email: email, password: password);
+      _user = user;
+
+      return true;
+
     } catch (e) {
       print(e);
       return false;

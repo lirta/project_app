@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
+
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleLogin() async {
+      if (await authProvider.login(
+          email: emailController.text,
+          password: passwordController.text)) {
+        Navigator.pushNamed(context, '/profile');
+      }
+    }
+    
     Widget header() {
       return Container(
         // margin: EdgeInsets.only(top: 30),
@@ -52,6 +69,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Expanded(
                         child: TextField(
+                          controller: emailController,
                       style: bTextStyle,
                       decoration:
                           InputDecoration.collapsed(hintText: 'Email Address'),
@@ -91,6 +109,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Expanded(
                         child: TextField(
+                          controller: passwordController,
                       style: bTextStyle,
                       obscureText: true,
                       decoration:
@@ -111,9 +130,7 @@ class LoginPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/profile');
-          },
+          onPressed: handleLogin,
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
