@@ -1,11 +1,29 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
+import 'package:provider/provider.dart';
 
 class SingupPage extends StatelessWidget {
+  TextEditingController nameController = TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController usernameController = TextEditingController(text: '');
+  TextEditingController phoneController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSingUp() async {
+      if (await authProvider.register(
+          name: nameController.text,
+          username: usernameController.text,
+          email: emailController.text,
+          password: passwordController.text)) {
+        Navigator.pushNamed(context, '/login');
+      }
+    }
+
     Widget header() {
       return Container(
         // margin: EdgeInsets.only(top: 30),
@@ -27,8 +45,6 @@ class SingupPage extends StatelessWidget {
         ),
       );
     }
-
-  
 
     Widget name() {
       return Container(
@@ -57,6 +73,7 @@ class SingupPage extends StatelessWidget {
                     Expanded(
                         child: TextField(
                       style: bTextStyle,
+                      controller: nameController,
                       decoration:
                           InputDecoration.collapsed(hintText: 'Full Name'),
                     ))
@@ -96,6 +113,7 @@ class SingupPage extends StatelessWidget {
                     Expanded(
                         child: TextField(
                       style: bTextStyle,
+                      controller: usernameController,
                       decoration:
                           InputDecoration.collapsed(hintText: 'Username'),
                     ))
@@ -135,6 +153,7 @@ class SingupPage extends StatelessWidget {
                     Expanded(
                         child: TextField(
                       style: bTextStyle,
+                      controller: emailController,
                       decoration:
                           InputDecoration.collapsed(hintText: 'Email Address'),
                     ))
@@ -174,6 +193,7 @@ class SingupPage extends StatelessWidget {
                     Expanded(
                         child: TextField(
                       style: bTextStyle,
+                      controller: passwordController,
                       obscureText: true,
                       decoration:
                           InputDecoration.collapsed(hintText: 'Password'),
@@ -193,7 +213,7 @@ class SingupPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {},
+          onPressed: handleSingUp,
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
@@ -203,24 +223,29 @@ class SingupPage extends StatelessWidget {
       );
     }
 
-    Widget login(){
+    Widget login() {
       return Container(
         margin: EdgeInsets.only(top: 40),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Log In ',style: bTextStyle.copyWith(),),
+            Text(
+              'Log In ',
+              style: bTextStyle.copyWith(),
+            ),
             GestureDetector(
-              onTap: (){
-                Navigator.pushNamed(context, '/log-in');
-              },
-              child: Text(' New',style: yTextStyle.copyWith(fontWeight: FontWeight.bold),))
+                onTap: () {
+                  Navigator.pushNamed(context, '/log-in');
+                },
+                child: Text(
+                  ' New',
+                  style: yTextStyle.copyWith(fontWeight: FontWeight.bold),
+                ))
           ],
         ),
       );
     }
 
-  
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
