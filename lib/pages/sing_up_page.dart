@@ -1,15 +1,46 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
+import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-class SingupPage extends StatelessWidget {
+class SingupPage extends StatefulWidget {
+  @override
+  _SingupPageState createState() => _SingupPageState();
+}
+
+class _SingupPageState extends State<SingupPage> {
   TextEditingController nameController = TextEditingController(text: '');
+
   TextEditingController emailController = TextEditingController(text: '');
+
   TextEditingController usernameController = TextEditingController(text: '');
+
   TextEditingController phoneController = TextEditingController(text: '');
+
   TextEditingController passwordController = TextEditingController(text: '');
+
+  // Future Register() async {
+  //   var url = "http://10.0.2.2/api/register.php";
+  //   var response = await http.post(Uri.parse(url), body: {
+  //     "name": nameController.text,
+  //     "username": usernameController.text,
+  //     "email": emailController.text,
+  //     "password": passwordController.text,
+  //   });
+
+  //   var data = jsonDecode(response.body)['user'];
+  //   print(response.body);
+  //   if (response.body == "true") {
+  //   } else {
+  //     Navigator.pushNamed(context, '/profile');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -20,7 +51,7 @@ class SingupPage extends StatelessWidget {
           username: usernameController.text,
           email: emailController.text,
           password: passwordController.text)) {
-        Navigator.pushNamed(context, '/login');
+        Navigator.pushNamed(context, '/profile');
       }
     }
 
@@ -214,6 +245,9 @@ class SingupPage extends StatelessWidget {
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
           onPressed: handleSingUp,
+          //     () {
+          //   Register();
+          // },
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(

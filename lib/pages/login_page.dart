@@ -2,25 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
 
+class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController(text: '');
+
   TextEditingController passwordController = TextEditingController(text: '');
 
+  Future Login() async {
+    var url = "http://10.0.2.2/api/login.php";
+    var response = await http.post(Uri.parse(url), body: {
+      "email": emailController.text,
+      "password": passwordController.text,
+    });
+
+    var data = json.decode(response.body);
+    // print(data);
+  }
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    // AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
-    handleLogin() async {
-      if (await authProvider.login(
-          email: emailController.text,
-          password: passwordController.text)) {
-        Navigator.pushNamed(context, '/profile');
-      }
-    }
-    
+    // handleLogin() async {
+    //   if (await authProvider.login(
+    //       email: emailController.text,
+    //       password: passwordController.text)) {
+    //     Navigator.pushNamed(context, '/profile');
+    //   }
+    // }
+
     Widget header() {
       return Container(
         // margin: EdgeInsets.only(top: 30),
@@ -69,7 +87,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Expanded(
                         child: TextField(
-                          controller: emailController,
+                      controller: emailController,
                       style: bTextStyle,
                       decoration:
                           InputDecoration.collapsed(hintText: 'Email Address'),
@@ -109,7 +127,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Expanded(
                         child: TextField(
-                          controller: passwordController,
+                      controller: passwordController,
                       style: bTextStyle,
                       obscureText: true,
                       decoration:
@@ -130,7 +148,9 @@ class LoginPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: handleLogin,
+          onPressed: () {
+            Login();
+          },
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
