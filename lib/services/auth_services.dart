@@ -13,18 +13,10 @@ class AuthService {
     String email,
     String password,
   }) async {
-    // var url = '$baseUrl' + 'register.php';
-    var url = "http://10.0.2.2/api/register.php";
-
-    var body = jsonEncode({
-      'name': name,
-      'username': username,
-      'email': email,
-      'password': password
-    });
+    var url = '$baseUrl' + 'register.php';
 
     var response = await http.post(
-      Uri.parse("http://10.0.2.2/api/register.php"),
+      Uri.parse(url),
       body: {
         'name': name,
         'username': username,
@@ -32,13 +24,11 @@ class AuthService {
         'password': password
       },
     );
-    // print(body);
-    print(response.body);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
       UserModel user = UserModel.fromJson(data);
-      // print(user);
+      print(user);
       return user;
     } else {
       throw Exception('Gagal Register');
@@ -50,7 +40,7 @@ class AuthService {
     String password,
   }) async {
     var url = '$baseUrl' + 'login.php';
-    var body = jsonEncode({'email': email, 'password': password});
+    var body = {'email': email, 'password': password};
 
     print(body);
     var response = await http.post(
@@ -61,8 +51,8 @@ class AuthService {
     print(response.body);
 
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      UserModel user = UserModel.fromJson(data['user']);
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
       return user;
     } else {
       throw Exception('Gagal login');

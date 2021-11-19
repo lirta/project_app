@@ -24,23 +24,6 @@ class _SingupPageState extends State<SingupPage> {
 
   TextEditingController passwordController = TextEditingController(text: '');
 
-  // Future Register() async {
-  //   var url = "http://10.0.2.2/api/register.php";
-  //   var response = await http.post(Uri.parse(url), body: {
-  //     "name": nameController.text,
-  //     "username": usernameController.text,
-  //     "email": emailController.text,
-  //     "password": passwordController.text,
-  //   });
-
-  //   var data = jsonDecode(response.body)['user'];
-  //   print(response.body);
-  //   if (response.body == "true") {
-  //   } else {
-  //     Navigator.pushNamed(context, '/profile');
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
