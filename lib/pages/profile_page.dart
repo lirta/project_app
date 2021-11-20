@@ -24,7 +24,7 @@ class ProfilePage extends StatelessWidget {
               children: [
                 ClipOval(
                   child: Image.asset(
-                    'assets/Logo3.png',
+                    'assets/image_profile.png',
                     width: 70,
                   ),
                 ),
@@ -118,18 +118,10 @@ class ProfilePage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.pushNamed(context, '/edit-profile');
+                  Navigator.pushNamed(context, '/edit-profile');
                 },
                 child: menuItem(
                   'Edit Profile',
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(context, '/edit-profile');
-                },
-                child: menuItem(
-                  'Edit Username',
                 ),
               ),
               GestureDetector(
@@ -142,12 +134,21 @@ class ProfilePage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.pushNamed(context, '/edit-profile');
+                  Navigator.pushNamed(context, '/edit-password');
                 },
                 child: menuItem(
-                  'Edit Password',
+                  'Ganti Password',
                 ),
               ),
+              
+              // GestureDetector(
+              //   onTap: () {
+              //     // Navigator.pushNamed(context, '/edit-profile');
+              //   },
+              //   child: menuItem(
+              //     'Edit Username',
+              //   ),
+              // ),
             ],
           ),
         ),

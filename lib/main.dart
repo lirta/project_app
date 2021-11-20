@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_first/pages/edit_password_page.dart';
+import 'package:my_first/pages/edit_profile_page.dart';
 import 'package:my_first/pages/profile_page.dart';
 import 'package:my_first/pages/splash_page.dart';
 import 'package:my_first/pages/login_page.dart';
@@ -23,6 +25,8 @@ class MyApp extends StatelessWidget {
           '/log-in': (context) => LoginPage(),
           '/sing-up': (context) => SingupPage(),
           '/profile': (context) => ProfilePage(),
+          '/edit-password': (context) => EditPasswordPage(),
+          '/edit-profile': (context) => EditProfilePage(),
         },
       ),
     );
