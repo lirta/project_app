@@ -67,44 +67,44 @@ class EditProfilePage extends StatelessWidget {
       );
     }
 
-    Widget usernameInput() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Username',
-              style: bTextStyle.copyWith(
-                fontSize: 13,
-              ),
-            ),
-            TextFormField(
-              style: wTextStyle,
-              decoration: InputDecoration(
-                hintText: '@${user.username}',
-                hintStyle: wTextStyle,
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: blueColor,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+    // Widget usernameInput() {
+    //   return Container(
+    //     margin: EdgeInsets.only(
+    //       top: 30,
+    //     ),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           'Username',
+    //           style: bTextStyle.copyWith(
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //         TextFormField(
+    //           style: wTextStyle,
+    //           decoration: InputDecoration(
+    //             hintText: '@${user.username}',
+    //             hintStyle: wTextStyle,
+    //             enabledBorder: UnderlineInputBorder(
+    //               borderSide: BorderSide(
+    //                 color: blueColor,
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
-     Widget Update() {
+    Widget Update() {
       return Container(
         height: 50,
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: (){},
+          onPressed: () {},
           //     () {
           //   update();
           // },
@@ -117,7 +117,6 @@ class EditProfilePage extends StatelessWidget {
       );
     }
 
-    
     Widget content() {
       return Container(
         width: double.infinity,
@@ -136,19 +135,18 @@ class EditProfilePage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/image_profile.png',
-                    
-                  )
-                  //  NetworkImage(
-                  //   user.profilePhotoUrl,
-                  // ),
-                ),
+                    fit: BoxFit.fill,
+                    image: AssetImage(
+                      'assets/image_profile.png',
+                    )
+                    //  NetworkImage(
+                    //   user.profilePhotoUrl,
+                    // ),
+                    ),
               ),
             ),
             nameInput(),
-            usernameInput(),
+            // usernameInput(),
             Update()
           ],
         ),

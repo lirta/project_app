@@ -52,6 +52,7 @@ class EditPasswordPage extends StatelessWidget {
             ),
             TextFormField(
               style: bTextStyle,
+              obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Password Lama',
                 hintStyle: wTextStyle,
@@ -135,7 +136,7 @@ class EditPasswordPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: (){},
+          onPressed: () {},
           //     () {
           //   update();
           // },
@@ -147,7 +148,7 @@ class EditPasswordPage extends StatelessWidget {
         ),
       );
     }
-    
+
     Widget content() {
       return Container(
         width: double.infinity,

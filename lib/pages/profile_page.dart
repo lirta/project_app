@@ -12,7 +12,7 @@ class ProfilePage extends StatelessWidget {
 
     Widget header() {
       return AppBar(
-        backgroundColor: whiteColor,
+        backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
         elevation: 0,
         flexibleSpace: SafeArea(
@@ -140,7 +140,7 @@ class ProfilePage extends StatelessWidget {
                   'Ganti Password',
                 ),
               ),
-              
+
               // GestureDetector(
               //   onTap: () {
               //     // Navigator.pushNamed(context, '/edit-profile');
