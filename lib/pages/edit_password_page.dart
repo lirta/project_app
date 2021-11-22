@@ -14,38 +14,36 @@ class EditPasswordPage extends StatelessWidget {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
 
-    handleUpdatePassword() async{
+    handleUpdatePassword() async {
       if (!(oldController.text.trim() != "" &&
-                newController.text.trim() != "" &&
-                comfirController.text.trim() != "")) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'fild tidak boleh kosong',
-              ).show(context);
-            } else if (!(newController.text.length >= 6)) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'Password minimal 6 character',
-              ).show(context);
-            } else if (!(newController.text == comfirController.text)) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'Password baru & password confirmation harus sama',
-              ).show(context);
-            }else{
-                  Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'error',
-              ).show(context);
-            }
+          newController.text.trim() != "" &&
+          comfirController.text.trim() != "")) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'fild tidak boleh kosong',
+        ).show(context);
+      } else if (!(newController.text.length >= 6)) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Password minimal 6 character',
+        ).show(context);
+      } else if (!(newController.text == comfirController.text)) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Password baru & password confirmation tidak sama',
+        ).show(context);
+      } else {
+        if (await authProvider.editPassword(
+            email: user.email, password: newController.text)) {
+          Navigator.pushNamed(context, '/profile');
+        }
+      }
     }
 
     Widget header() {
@@ -198,22 +196,6 @@ class EditPasswordPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Container(
-            //   width: 100,
-            //   height: 100,
-            //   margin: EdgeInsets.only(
-            //     top: defaultMargin,
-            //   ),
-            //   decoration: BoxDecoration(
-            //     shape: BoxShape.circle,
-            //     image: DecorationImage(
-            //       fit: BoxFit.fill,
-            //       // image: NetworkImage(
-            //       //   user.profilePhotoUrl,
-            //       // ),
-            //     ),
-            //   ),
-            // ),
             passwordOld(),
             passwordNew(),
             passwordConfirmation(),

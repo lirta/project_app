@@ -1,4 +1,3 @@
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first/provider/auth_provider.dart';
@@ -27,43 +26,40 @@ class _SingupPageState extends State<SingupPage> {
 
     handleSingUp() async {
       // validasi
-       if (!(passwordController.text.trim() != "" &&
-                emailController.text.trim() != "" &&
-                usernameController.text.trim() != "" &&
-                nameController.text.trim() != "")) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'fild tidak boleh kosong',
-              ).show(context);
-            } else if (!(passwordController.text.length >= 6)) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'Password minimal 6 character',
-              ).show(context);
-            } else if (!(usernameController.text.length >= 4)) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'Username minimal 6 character',
-              ).show(context);
-            }else{
-                //prosess register 
-              if (await authProvider.register(
-                  name: nameController.text,
-                  username: usernameController.text,
-                  email: emailController.text,
-                  password: passwordController.text)) {
-                Navigator.pushNamed(context, '/profile');
-              }
-              
-            }
-
-      
+      if (!(passwordController.text.trim() != "" &&
+          emailController.text.trim() != "" &&
+          usernameController.text.trim() != "" &&
+          nameController.text.trim() != "")) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'fild tidak boleh kosong',
+        ).show(context);
+      } else if (!(passwordController.text.length >= 6)) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Password minimal 6 character',
+        ).show(context);
+      } else if (!(usernameController.text.length >= 4)) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Username minimal 6 character',
+        ).show(context);
+      } else {
+        //prosess register
+        if (await authProvider.register(
+            name: nameController.text,
+            username: usernameController.text,
+            email: emailController.text,
+            password: passwordController.text)) {
+          Navigator.pushNamed(context, '/profile');
+        }
+      }
     }
 
     Widget header() {
@@ -73,7 +69,7 @@ class _SingupPageState extends State<SingupPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sing Up',
+              'Sign Up',
               style: bTextStyle.copyWith(fontSize: 24, fontWeight: semibold),
             ),
             SizedBox(
@@ -263,7 +259,7 @@ class _SingupPageState extends State<SingupPage> {
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
-          child: Text('Sing Up', style: wTextStyle),
+          child: Text('Sign Up', style: wTextStyle),
         ),
       );
     }
@@ -275,7 +271,7 @@ class _SingupPageState extends State<SingupPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Log In ',
+              'Sign In ',
               style: bTextStyle.copyWith(),
             ),
             GestureDetector(

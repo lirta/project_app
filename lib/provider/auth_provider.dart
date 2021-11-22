@@ -38,4 +38,47 @@ class AuthProvider with ChangeNotifier {
       return false;
     }
   }
+
+  Future<void> singOut() async {
+    // await _user.signOut();
+  }
+
+  Future<bool> editUsername({String email, String username}) async {
+    try {
+      UserModel user =
+          await AuthService().editUsername(email: email, username: username);
+      _user = user;
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> editEmail({String email, String username}) async {
+    try {
+      UserModel user =
+          await AuthService().editEmail(email: email, username: username);
+      _user = user;
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> editPassword({String email, String password}) async {
+    try {
+      UserModel user =
+          await AuthService().editPassword(email: email, password: password);
+      _user = user;
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

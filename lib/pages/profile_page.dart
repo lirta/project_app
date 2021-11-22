@@ -126,10 +126,18 @@ class ProfilePage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.pushNamed(context, '/edit-profile');
+                  Navigator.pushNamed(context, '/edit-email');
                 },
                 child: menuItem(
-                  'Edit Email',
+                  'Ganti Email',
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/edit-username');
+                },
+                child: menuItem(
+                  'Ganti Username',
                 ),
               ),
               GestureDetector(

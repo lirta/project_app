@@ -5,7 +5,8 @@ import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
+  String baseUrl = 'http://10.0.2.2/api/';
+  // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
   Future<UserModel> register({
     String name,
@@ -56,6 +57,80 @@ class AuthService {
       return user;
     } else {
       throw Exception('Gagal login');
+    }
+  }
+
+  Future<UserModel> editUsername({
+    String email,
+    String username,
+  }) async {
+    var url = '$baseUrl' + 'edit_username.php';
+    var body = {'email': email, 'username': username};
+
+    print(body);
+    var response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      return user;
+    } else {
+      throw Exception('Gagal Edit username');
+    }
+  }
+
+  Future<UserModel> editEmail({
+    String email,
+    String username,
+  }) async {
+    var url = '$baseUrl' + 'edit_email.php';
+    var body = {'email': email, 'username': username};
+
+    print(body);
+    var response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      return user;
+    } else {
+      throw Exception('Gagal Edit email');
+    }
+  }
+
+  Future<UserModel> editPassword({
+    String email,
+    String password,
+  }) async {
+    var url = '$baseUrl' + 'edit_password.php';
+    var body = {
+      'email': email,
+    };
+
+    print(body);
+    var response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      return user;
+    } else {
+      throw Exception('Gagal Edit password');
     }
   }
 }

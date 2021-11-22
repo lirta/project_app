@@ -5,41 +5,41 @@ import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
-class EditEmail extends StatelessWidget {
-  TextEditingController oldEmailController = TextEditingController(text: '');
-  TextEditingController newEmailController = TextEditingController(text: '');
+class EditUsername extends StatelessWidget {
+  TextEditingController oldUsernameController = TextEditingController(text: '');
+  TextEditingController newUsernameController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
 
-    handleUpdateEmail() async {
-      if (!(oldEmailController.text.trim() != "" &&
-          newEmailController.text.trim() != "")) {
+    handleUpdateUsername() async {
+      if (!(oldUsernameController.text.trim() != "" &&
+          newUsernameController.text.trim() != "")) {
         Flushbar(
           duration: Duration(seconds: 4),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Color(0xffff5c83),
-          message: 'File tidak boleh kosong',
+          message: 'fild tidak boleh kosong',
         ).show(context);
-      } else if (!(oldEmailController.text == user.email)) {
+      } else if (!(oldUsernameController.text == user.username)) {
         Flushbar(
           duration: Duration(seconds: 4),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Color(0xffff5c83),
-          message: 'Email lama anda salah',
+          message: 'username lama anda salah',
         ).show(context);
-      } else if (!(newEmailController.text != user.email)) {
+      } else if (!(newUsernameController.text != user.username)) {
         Flushbar(
           duration: Duration(seconds: 4),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Color(0xffff5c83),
-          message: 'Email lama dan Email baru anda sama',
+          message: 'username lama dan username baru anda sama',
         ).show(context);
       } else {
-        if (await authProvider.editEmail(
-            email: newEmailController.text, username: user.username)) {
+        if (await authProvider.editUsername(
+            username: newUsernameController.text, email: user.email)) {
           Navigator.pushNamed(context, '/profile');
         }
       }
@@ -57,7 +57,7 @@ class EditEmail extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Ganti Email',
+          'Ganti Username',
         ),
         actions: [
           IconButton(
@@ -71,7 +71,7 @@ class EditEmail extends StatelessWidget {
       );
     }
 
-    Widget oldEmail() {
+    Widget oldUsername() {
       return Container(
         margin: EdgeInsets.only(
           top: 30,
@@ -80,16 +80,16 @@ class EditEmail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Email Lama',
+              'Username Lama',
               style: bTextStyle.copyWith(
                 fontSize: 13,
               ),
             ),
             TextFormField(
-              controller: oldEmailController,
+              controller: oldUsernameController,
               style: bTextStyle,
               decoration: InputDecoration(
-                hintText: 'Email Lama',
+                hintText: 'Username Lama',
                 hintStyle: wTextStyle,
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -103,7 +103,7 @@ class EditEmail extends StatelessWidget {
       );
     }
 
-    Widget newEmail() {
+    Widget newUsername() {
       return Container(
         margin: EdgeInsets.only(
           top: 30,
@@ -112,16 +112,16 @@ class EditEmail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Email Baru',
+              'Username Baru',
               style: bTextStyle.copyWith(
                 fontSize: 13,
               ),
             ),
             TextFormField(
-              controller: newEmailController,
+              controller: newUsernameController,
               style: bTextStyle,
               decoration: InputDecoration(
-                hintText: 'Email Baru',
+                hintText: 'Username Baru',
                 hintStyle: wTextStyle,
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -141,7 +141,7 @@ class EditEmail extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: handleUpdateEmail,
+          onPressed: handleUpdateUsername,
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
@@ -160,8 +160,8 @@ class EditEmail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            oldEmail(),
-            newEmail(),
+            oldUsername(),
+            newUsername(),
             // usernameConfirmation(),
             Update(),
           ],
