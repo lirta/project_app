@@ -12,18 +12,39 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController(text: '');
-
   TextEditingController passwordController = TextEditingController(text: '');
+
+  GlobalKey<FormState> formKy = GlobalKey<FormState>();
+  GlobalKey<ScaffoldMessengerState> scaffolMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     handleLogin() async {
-      if (await authProvider.login(
-          email: emailController.text, password: passwordController.text)) {
-        Navigator.pushNamed(context, '/profile');
-      }
+        if (!(passwordController.text.trim() != "" &&
+                emailController.text.trim() != "")) {
+              Flushbar(
+                duration: Duration(milliseconds: 1500),
+                flushbarPosition: FlushbarPosition.TOP,
+                backgroundColor: Color(0xffff5c83),
+                message: 'fild tidak boleh kosong',
+              ).show(context);
+            } else if (!(passwordController.text.length >= 6)) {
+              Flushbar(
+                duration: Duration(milliseconds: 1500),
+                flushbarPosition: FlushbarPosition.TOP,
+                backgroundColor: Color(0xffff5c83),
+                message: 'Password minimal 6 character',
+              ).show(context);
+            }else{
+                  if (await authProvider.login(
+                    email: emailController.text, password: passwordController.text)) {
+                    Navigator.pushNamed(context, '/profile');
+                  }
+            }
+
+        
     }
 
     Widget header() {
@@ -73,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: TextField(
+                        child: TextFormField(
                       controller: emailController,
                       style: bTextStyle,
                       decoration:
@@ -135,26 +156,27 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {
-            if (!(passwordController.text.trim() != "" &&
-                emailController.text.trim() != "")) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'fild tidak boleh kosong',
-              ).show(context);
-            } else if (!(passwordController.text.length >= 6)) {
-              Flushbar(
-                duration: Duration(milliseconds: 1500),
-                flushbarPosition: FlushbarPosition.TOP,
-                backgroundColor: Color(0xffff5c83),
-                message: 'Password minimal 6 character',
-              ).show(context);
-            } else {
-              handleLogin();
-            }
-          },
+          onPressed: handleLogin,
+          // () {
+          //   if (!(passwordController.text.trim() != "" &&
+          //       emailController.text.trim() != "")) {
+          //     Flushbar(
+          //       duration: Duration(milliseconds: 1500),
+          //       flushbarPosition: FlushbarPosition.TOP,
+          //       backgroundColor: Color(0xffff5c83),
+          //       message: 'fild tidak boleh kosong',
+          //     ).show(context);
+          //   } else if (!(passwordController.text.length >= 6)) {
+          //     Flushbar(
+          //       duration: Duration(milliseconds: 1500),
+          //       flushbarPosition: FlushbarPosition.TOP,
+          //       backgroundColor: Color(0xffff5c83),
+          //       message: 'Password minimal 6 character',
+          //     ).show(context);
+          //   } else {
+          //     handleLogin();
+          //   }
+          // },
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(

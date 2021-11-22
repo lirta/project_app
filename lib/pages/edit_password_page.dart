@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
@@ -5,10 +6,47 @@ import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
 class EditPasswordPage extends StatelessWidget {
+  TextEditingController oldController = TextEditingController(text: '');
+  TextEditingController newController = TextEditingController(text: '');
+  TextEditingController comfirController = TextEditingController(text: '');
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
+
+    handleUpdatePassword() async{
+      if (!(oldController.text.trim() != "" &&
+                newController.text.trim() != "" &&
+                comfirController.text.trim() != "")) {
+              Flushbar(
+                duration: Duration(milliseconds: 1500),
+                flushbarPosition: FlushbarPosition.TOP,
+                backgroundColor: Color(0xffff5c83),
+                message: 'fild tidak boleh kosong',
+              ).show(context);
+            } else if (!(newController.text.length >= 6)) {
+              Flushbar(
+                duration: Duration(milliseconds: 1500),
+                flushbarPosition: FlushbarPosition.TOP,
+                backgroundColor: Color(0xffff5c83),
+                message: 'Password minimal 6 character',
+              ).show(context);
+            } else if (!(newController.text == comfirController.text)) {
+              Flushbar(
+                duration: Duration(milliseconds: 1500),
+                flushbarPosition: FlushbarPosition.TOP,
+                backgroundColor: Color(0xffff5c83),
+                message: 'Password baru & password confirmation harus sama',
+              ).show(context);
+            }else{
+                  Flushbar(
+                duration: Duration(milliseconds: 1500),
+                flushbarPosition: FlushbarPosition.TOP,
+                backgroundColor: Color(0xffff5c83),
+                message: 'error',
+              ).show(context);
+            }
+    }
 
     Widget header() {
       return AppBar(
@@ -51,6 +89,7 @@ class EditPasswordPage extends StatelessWidget {
               ),
             ),
             TextFormField(
+              controller: oldController,
               style: bTextStyle,
               obscureText: true,
               decoration: InputDecoration(
@@ -83,7 +122,9 @@ class EditPasswordPage extends StatelessWidget {
               ),
             ),
             TextFormField(
+              controller: newController,
               style: bTextStyle,
+              obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Password Baru',
                 hintStyle: wTextStyle,
@@ -114,7 +155,9 @@ class EditPasswordPage extends StatelessWidget {
               ),
             ),
             TextFormField(
+              controller: comfirController,
               style: bTextStyle,
+              obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Password confirmation',
                 hintStyle: wTextStyle,
@@ -136,10 +179,7 @@ class EditPasswordPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {},
-          //     () {
-          //   update();
-          // },
+          onPressed: handleUpdatePassword,
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
