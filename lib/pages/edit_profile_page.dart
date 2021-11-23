@@ -1,10 +1,21 @@
+// import 'dart:html';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
+  @override
+  _EditProfilePageState createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  File gambar;
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -126,24 +137,48 @@ class EditProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 100,
-              height: 100,
-              margin: EdgeInsets.only(
-                top: defaultMargin,
-              ),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                      'assets/image_profile.png',
-                    )
-                    //  NetworkImage(
-                    //   user.profilePhotoUrl,
-                    // ),
-                    ),
-              ),
+            GestureDetector(
+              onTap: () async {
+                PickedFile pickedFile =
+                    await ImagePicker().getImage(source: ImageSource.gallery);
+                if (pickedFile != null) {
+                  gambar = File(pickedFile.path);
+                  setState(() {});
+                }
+              },
+              child: Container(
+                  width: 100,
+                  height: 100,
+                  margin: EdgeInsets.only(
+                    top: defaultMargin,
+                  ),
+                  child: (gambar != Null)
+                      ? Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(
+                                    'assets/image_profile.png',
+                                  )
+                                  //  NetworkImage(
+                                  //   user.profilePhotoUrl,
+                                  // ),
+                                  )),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(
+                                    'assets/image_profile.png',
+                                  )
+                                  //  NetworkImage(
+                                  //   user.profilePhotoUrl,
+                                  // ),
+                                  )),
+                        )),
             ),
             nameInput(),
             // usernameInput(),

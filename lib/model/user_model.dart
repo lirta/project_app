@@ -5,8 +5,9 @@ class UserModel {
   String name;
   String email;
   String username;
+  String image;
 
-  UserModel({this.id, this.name, this.username, this.email});
+  UserModel({this.id, this.name, this.username, this.email, image});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

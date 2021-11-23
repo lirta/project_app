@@ -59,8 +59,8 @@ class ProfilePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/sign-in', (route) => false);
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //     context, '/sign-in', (route) => false);
                   },
                   child: Image.asset(
                     'assets/exit.png',
