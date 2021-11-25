@@ -1,4 +1,5 @@
 // import 'dart:html';
+// import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
+// import 'package:http/http.dart' as http;
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -14,7 +16,15 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  File gambar;
+  File _image;
+  final picker = ImagePicker();
+
+  Future pilihGalery() async {
+    var pickedImage = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedImage.path);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,37 +88,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
     }
 
-    // Widget usernameInput() {
-    //   return Container(
-    //     margin: EdgeInsets.only(
-    //       top: 30,
-    //     ),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           'Username',
-    //           style: bTextStyle.copyWith(
-    //             fontSize: 13,
-    //           ),
-    //         ),
-    //         TextFormField(
-    //           style: wTextStyle,
-    //           decoration: InputDecoration(
-    //             hintText: '@${user.username}',
-    //             hintStyle: wTextStyle,
-    //             enabledBorder: UnderlineInputBorder(
-    //               borderSide: BorderSide(
-    //                 color: blueColor,
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-
+    // ignore: non_constant_identifier_names
     Widget Update() {
       return Container(
         height: 50,
@@ -139,46 +119,39 @@ class _EditProfilePageState extends State<EditProfilePage> {
           children: [
             GestureDetector(
               onTap: () async {
-                PickedFile pickedFile =
-                    await ImagePicker().getImage(source: ImageSource.gallery);
-                if (pickedFile != null) {
-                  gambar = File(pickedFile.path);
-                  setState(() {});
-                }
+                pilihGalery();
               },
               child: Container(
-                  width: 100,
-                  height: 100,
-                  margin: EdgeInsets.only(
-                    top: defaultMargin,
-                  ),
-                  child: (gambar != Null)
-                      ? Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                    'assets/image_profile.png',
-                                  )
-                                  //  NetworkImage(
-                                  //   user.profilePhotoUrl,
-                                  // ),
-                                  )),
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                    'assets/image_profile.png',
-                                  )
-                                  //  NetworkImage(
-                                  //   user.profilePhotoUrl,
-                                  // ),
-                                  )),
-                        )),
+                width: 100,
+                height: 100,
+                margin: EdgeInsets.only(
+                  top: defaultMargin,
+                ),
+                child: _image == null
+                    ? Image.asset('assets/image_profile.png')
+                    // Container(
+                    //     child: Image.file(_image),
+                    //     // decoration: BoxDecoration(
+                    //     //     shape: BoxShape.circle,
+                    //     //     image: DecorationImage(
+                    //     //         fit: BoxFit.fill,
+                    //     //         image: AssetImage(
+                    //     //           'assets/image_profile.png',
+                    //     //         )
+                    //     //         )
+                    //     //         ),
+                    //   )
+                    : Image.file(_image),
+                // Container(
+                //   child: Text('pilih gambar'),
+                //     // decoration: BoxDecoration(
+                //     //     shape: BoxShape.circle,
+                //     //     image: DecorationImage(
+                //     //       fit: BoxFit.fill,
+                //     //        image:Image.file(_image);
+                //     //     )),
+                //   )
+              ),
             ),
             nameInput(),
             // usernameInput(),

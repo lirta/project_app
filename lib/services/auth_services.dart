@@ -5,8 +5,8 @@ import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  String baseUrl = 'http://10.0.2.2/api/';
-  // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
+  // String baseUrl = 'http://10.0.2.2/api/';
+  String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
   Future<UserModel> register({
     String name,
@@ -108,13 +108,16 @@ class AuthService {
     }
   }
 
-  Future<UserModel> editPassword({
+  Future<UserModel> profile({
     String email,
-    String password,
+    String name,
+    String image,
   }) async {
     var url = '$baseUrl' + 'edit_password.php';
     var body = {
       'email': email,
+      'name': name,
+      'image': image,
     };
 
     print(body);
@@ -127,8 +130,35 @@ class AuthService {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
-      UserModel user = UserModel.fromJson(data);
-      return user;
+      // UserModel user = UserModel.fromJson(data);
+      return data;
+    } else {
+      throw Exception('Gagal Edit password');
+    }
+  }
+  Future<UserModel> editPassword({
+    String email,
+    String password,
+    String newpassword,
+  }) async {
+    var url = '$baseUrl' + 'edit_password.php';
+    var body = {
+      'email': email,
+      'password': password,
+      'newpassword': newpassword,
+    };
+
+    print(body);
+    var response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['error_msg'];
+      return data;
     } else {
       throw Exception('Gagal Edit password');
     }

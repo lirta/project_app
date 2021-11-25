@@ -2,17 +2,27 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
+// import 'package:my_first/services/auth_services.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
-class EditPasswordPage extends StatelessWidget {
+class EditPasswordPage extends StatefulWidget {
+  @override
+  State<EditPasswordPage> createState() => _EditPasswordPageState();
+}
+
+class _EditPasswordPageState extends State<EditPasswordPage> {
   TextEditingController oldController = TextEditingController(text: '');
+
   TextEditingController newController = TextEditingController(text: '');
+
   TextEditingController comfirController = TextEditingController(text: '');
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
+    // var data = AuthService();
 
     handleUpdatePassword() async {
       if (!(oldController.text.trim() != "" &&
@@ -40,8 +50,16 @@ class EditPasswordPage extends StatelessWidget {
         ).show(context);
       } else {
         if (await authProvider.editPassword(
-            email: user.email, password: newController.text)) {
-          Navigator.pushNamed(context, '/profile');
+            email: user.email,
+            newpassword: newController.text,
+            password: oldController.text)) {
+          Navigator.pushNamed(context, '/');
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Password baru & password confirmation tidak sama',
+          ).show(context);
         }
       }
     }
@@ -171,6 +189,7 @@ class EditPasswordPage extends StatelessWidget {
       );
     }
 
+    // ignore: non_constant_identifier_names
     Widget Update() {
       return Container(
         height: 50,

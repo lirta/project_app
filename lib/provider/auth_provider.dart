@@ -69,10 +69,11 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> editPassword({String email, String password}) async {
+  Future<bool> editPassword(
+      {String email, String password, String newpassword}) async {
     try {
-      UserModel user =
-          await AuthService().editPassword(email: email, password: password);
+      UserModel user = await AuthService().editPassword(
+          email: email, password: password, newpassword: newpassword);
       _user = user;
 
       return true;
