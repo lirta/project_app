@@ -57,7 +57,7 @@ class _SingupPageState extends State<SingupPage> {
             username: usernameController.text,
             email: emailController.text,
             password: passwordController.text)) {
-          Navigator.pushNamed(context, '/profile');
+          Navigator.pushNamed(context, '/home');
         }
       }
     }

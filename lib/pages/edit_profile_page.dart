@@ -20,6 +20,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final picker = ImagePicker();
 
   Future pilihGalery() async {
+    // ignore: deprecated_member_use
     var pickedImage = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedImage.path);

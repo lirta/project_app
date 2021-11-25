@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         if (await authProvider.login(
             email: emailController.text, password: passwordController.text)) {
-          Navigator.pushNamed(context, '/profile');
+          Navigator.pushNamed(context, '/home');
         }
       }
     }

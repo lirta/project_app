@@ -5,6 +5,7 @@ import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class EditEmail extends StatelessWidget {
   TextEditingController oldEmailController = TextEditingController(text: '');
   TextEditingController newEmailController = TextEditingController(text: '');
@@ -135,6 +136,7 @@ class EditEmail extends StatelessWidget {
       );
     }
 
+    // ignore: non_constant_identifier_names
     Widget Update() {
       return Container(
         height: 50,
