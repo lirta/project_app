@@ -2,12 +2,15 @@
 // import 'dart:convert';
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
 // import 'package:http/http.dart' as http;
 
 class EditProfilePage extends StatefulWidget {
@@ -16,14 +19,15 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  File _image;
+  TextEditingController nameController = TextEditingController(text: '');
+  File filegambar;
   final picker = ImagePicker();
 
   Future pilihGalery() async {
     // ignore: deprecated_member_use
     var pickedImage = await picker.getImage(source: ImageSource.gallery);
     setState(() {
-      _image = File(pickedImage.path);
+      filegambar = File(pickedImage.path);
     });
   }
 
@@ -31,6 +35,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
+
+    updateImage() async {
+      if (filegambar == null) {
+        if (await authProvider.updateImage(
+            name: nameController.text, email: user.email)) {
+          Navigator.pushNamed(context, '/home');
+        }
+      } else {
+        String baseUrl = 'http://10.0.2.2/api/';
+        var url = '$baseUrl' + 'InsertGambar.php';
+        var uri = Uri.parse(url);
+        var request = new http.MultipartRequest("POST", uri);
+        var multipartFile =
+            await http.MultipartFile.fromPath('filegambar', filegambar.path);
+        request.files.add(multipartFile);
+        // request.fields['name'] = name;
+        request.fields['email'] = user.email;
+        var response = await request.send();
+
+        if (response.statusCode == 200) {
+        } else {
+          print("gagal");
+        }
+        if (await authProvider.updateImage(
+            name: nameController.text, email: user.email)) {
+          Navigator.pushNamed(context, '/home');
+        }
+      }
+    }
 
     Widget header() {
       return AppBar(
@@ -73,6 +106,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
             TextFormField(
+              controller: nameController,
               style: bTextStyle,
               decoration: InputDecoration(
                 hintText: user.name,
@@ -96,10 +130,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {},
-          //     () {
-          //   update();
-          // },
+          onPressed: updateImage,
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
@@ -123,36 +154,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 pilihGalery();
               },
               child: Container(
-                width: 100,
-                height: 100,
-                margin: EdgeInsets.only(
-                  top: defaultMargin,
-                ),
-                child: _image == null
-                    ? Image.asset('assets/image_profile.png')
-                    // Container(
-                    //     child: Image.file(_image),
-                    //     // decoration: BoxDecoration(
-                    //     //     shape: BoxShape.circle,
-                    //     //     image: DecorationImage(
-                    //     //         fit: BoxFit.fill,
-                    //     //         image: AssetImage(
-                    //     //           'assets/image_profile.png',
-                    //     //         )
-                    //     //         )
-                    //     //         ),
-                    //   )
-                    : Image.file(_image),
-                // Container(
-                //   child: Text('pilih gambar'),
-                //     // decoration: BoxDecoration(
-                //     //     shape: BoxShape.circle,
-                //     //     image: DecorationImage(
-                //     //       fit: BoxFit.fill,
-                //     //        image:Image.file(_image);
-                //     //     )),
-                //   )
-              ),
+                  width: 100,
+                  height: 100,
+                  margin: EdgeInsets.only(
+                    top: defaultMargin,
+                  ),
+                  child: filegambar == null
+                      ? Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(
+                                    'assets/image_profile.png',
+                                  ))),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: FileImage(filegambar),
+                              )),
+                        )),
             ),
             nameInput(),
             // usernameInput(),

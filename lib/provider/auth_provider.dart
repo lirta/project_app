@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/services/auth_services.dart';
@@ -81,5 +83,12 @@ class AuthProvider with ChangeNotifier {
       print(e);
       return false;
     }
+  }
+
+  Future<bool> updateImage({String email, String name}) async {
+    try {
+      UserModel user =
+          await AuthService().editprofile(email: email, name: name);
+    } catch (e) {}
   }
 }

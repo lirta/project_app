@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 
 class UserModel {
@@ -8,16 +8,16 @@ class UserModel {
   String name;
   String email;
   String username;
-  File image;
+  String imagePath;
 
-  UserModel({this.id, this.name, this.username, this.email, this.image});
+  UserModel({this.id, this.name, this.username, this.email, this.imagePath});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
     username = json['username'];
-    image = json['image'];
+    imagePath = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,7 +26,7 @@ class UserModel {
       'name': name,
       'email': email,
       'username': username,
-      'image': image,
+      'image': imagePath,
     };
   }
 }

@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 // import 'dart:io';
 
 import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 class AuthService {
-  // String baseUrl = 'http://10.0.2.2/api/';
-  String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
+  String baseUrl = 'http://10.0.2.2/api/';
+  // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
   Future<UserModel> register({
     String name,
@@ -136,6 +138,7 @@ class AuthService {
       throw Exception('Gagal Edit password');
     }
   }
+
   Future<UserModel> editPassword({
     String email,
     String password,
@@ -161,6 +164,26 @@ class AuthService {
       return data;
     } else {
       throw Exception('Gagal Edit password');
+    }
+  }
+
+  Future<UserModel> editprofile({String email, String name}) async {
+    var url = '$baseUrl' + 'profile.php';
+    var body = {
+      'email': email,
+      'name': name,
+    };
+
+    print(body);
+    var response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      print("sucsess");
+    } else {
+      print("gagal");
     }
   }
 }

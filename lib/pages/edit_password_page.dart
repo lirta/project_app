@@ -53,13 +53,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
             email: user.email,
             newpassword: newController.text,
             password: oldController.text)) {
-          Navigator.pushNamed(context, '/');
-          Flushbar(
-            duration: Duration(seconds: 4),
-            flushbarPosition: FlushbarPosition.TOP,
-            backgroundColor: Color(0xffff5c83),
-            message: 'Password baru & password confirmation tidak sama',
-          ).show(context);
+          Navigator.pushNamed(context, '/home');
         }
       }
     }

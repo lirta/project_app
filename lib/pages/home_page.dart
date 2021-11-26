@@ -84,22 +84,12 @@ class HomePage extends StatelessWidget {
           top: 14,
         ),
         child: Column(
-            children: 
-            memberProvider.member
-                .map(
-                  (member) =>MemeberTitle (member),
-                )
-                .toList(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            // MemeberTitle(),
-            
-            ),
+          children: memberProvider.member
+              .map(
+                (member) => MemeberTitle(member),
+              )
+              .toList(),
+        ),
       );
     }
 
