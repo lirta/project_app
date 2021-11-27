@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
             email: emailController.text, password: passwordController.text)) {
           Navigator.pushNamed(context, '/home');
         }
+        // print("NAVIGASI KE HOME PAGE");
       }
     }
 

@@ -1,5 +1,6 @@
 // import 'dart:html';
 // import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
@@ -9,7 +10,7 @@ import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 // import 'package:http/http.dart' as http;
 
@@ -38,10 +39,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     updateImage() async {
       if (filegambar == null) {
-        if (await authProvider.updateImage(
-            name: nameController.text, email: user.email)) {
-          Navigator.pushNamed(context, '/home');
-        }
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Pilih file gambar',
+        ).show(context);
       } else {
         String baseUrl = 'http://10.0.2.2/api/';
         var url = '$baseUrl' + 'InsertGambar.php';
@@ -53,15 +56,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
         // request.fields['name'] = name;
         request.fields['email'] = user.email;
         var response = await request.send();
-
         if (response.statusCode == 200) {
+          if (await authProvider.getUser(email: user.email)) {
+            Navigator.pushNamed(context, '/home');
+          }
         } else {
-          print("gagal");
+          print("Upload Failed");
         }
-        if (await authProvider.updateImage(
-            name: nameController.text, email: user.email)) {
-          Navigator.pushNamed(context, '/home');
-        }
+        // print(response);
+        // user.gambar = response['gambar'].toString();
       }
     }
 
@@ -91,37 +94,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
     }
 
-    Widget nameInput() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Name',
-              style: bTextStyle.copyWith(
-                fontSize: 13,
-              ),
-            ),
-            TextFormField(
-              controller: nameController,
-              style: bTextStyle,
-              decoration: InputDecoration(
-                hintText: user.name,
-                hintStyle: wTextStyle,
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: blueColor,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+    // Widget nameInput() {
+    //   return Container(
+    //     margin: EdgeInsets.only(
+    //       top: 30,
+    //     ),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           'Name',
+    //           style: bTextStyle.copyWith(
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //         TextFormField(
+    //           controller: nameController,
+    //           style: bTextStyle,
+    //           decoration: InputDecoration(
+    //             hintText: user.name,
+    //             hintStyle: wTextStyle,
+    //             enabledBorder: UnderlineInputBorder(
+    //               borderSide: BorderSide(
+    //                 color: blueColor,
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     // ignore: non_constant_identifier_names
     Widget Update() {
@@ -165,8 +168,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage(
-                                    'assets/image_profile.png',
+                                  image: NetworkImage(
+                                    'http://10.0.2.2/api/gambar/' + user.gambar,
                                   ))),
                         )
                       : Container(
@@ -178,7 +181,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               )),
                         )),
             ),
-            nameInput(),
+            // nameInput(),
             // usernameInput(),
             Update()
           ],

@@ -23,8 +23,8 @@ class ProfilePage extends StatelessWidget {
             child: Row(
               children: [
                 ClipOval(
-                  child: Image.asset(
-                    'assets/image_profile.png',
+                  child: Image.network(
+                    'http://10.0.2.2/api/gambar/' + user.gambar,
                     width: 70,
                   ),
                 ),

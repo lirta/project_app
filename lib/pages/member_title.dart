@@ -7,7 +7,7 @@ class MemeberTitle extends StatelessWidget {
   MemeberTitle(this.member);
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // Navigator.push(
@@ -26,18 +26,20 @@ class MemeberTitle extends StatelessWidget {
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset('assets/image_profile.png',
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,)
-              // Image.network(
-              //   product.galleries[0].url,
-              //   width: 120,
-              //   height: 120,
-              //   fit: BoxFit.cover,
-              // ),
-            ),
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  'http://10.0.2.2/api/gambar/' + member.gambar,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                )
+                // Image.network(
+                //   product.galleries[0].url,
+                //   width: 120,
+                //   height: 120,
+                //   fit: BoxFit.cover,
+                // ),
+                ),
             SizedBox(
               width: 12,
             ),
@@ -82,4 +84,4 @@ class MemeberTitle extends StatelessWidget {
       ),
     );
   }
-  }
+}

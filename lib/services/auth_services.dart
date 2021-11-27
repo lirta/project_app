@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 
 class AuthService {
   String baseUrl = 'http://10.0.2.2/api/';
@@ -184,6 +184,29 @@ class AuthService {
       print("sucsess");
     } else {
       print("gagal");
+    }
+  }
+
+  Future<UserModel> getuser({
+    String email,
+  }) async {
+    var url = '$baseUrl' + 'getUserEmail.php';
+    var body = {
+      'email': email,
+    };
+
+    print(body);
+    var response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      return user;
+    } else {
+      throw Exception('get data user gagal');
     }
   }
 }
