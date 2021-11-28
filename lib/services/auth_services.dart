@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
-// import 'dart:io';
 
 import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
-// import 'package:path/path.dart';
 
 class AuthService {
   String baseUrl = 'http://10.0.2.2/api/';
@@ -167,25 +164,25 @@ class AuthService {
     }
   }
 
-  Future<UserModel> editprofile({String email, String name}) async {
-    var url = '$baseUrl' + 'profile.php';
-    var body = {
-      'email': email,
-      'name': name,
-    };
+  // Future<UserModel> editprofile({String email, String name}) async {
+  //   var url = '$baseUrl' + 'profile.php';
+  //   var body = {
+  //     'email': email,
+  //     'name': name,
+  //   };
 
-    print(body);
-    var response = await http.post(
-      Uri.parse(url),
-      body: body,
-    );
+  //   print(body);
+  //   var response = await http.post(
+  //     Uri.parse(url),
+  //     body: body,
+  //   );
 
-    if (response.statusCode == 200) {
-      print("sucsess");
-    } else {
-      print("gagal");
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     print("sucsess");
+  //   } else {
+  //     print("gagal");
+  //   }
+  // }
 
   Future<UserModel> getuser({
     String email,
