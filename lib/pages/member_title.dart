@@ -10,12 +10,6 @@ class MemeberTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ProductPage(product),
-        //   ),
-        // );
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -27,8 +21,11 @@ class MemeberTitle extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  'http://10.0.2.2/api/gambar/' + member.gambar,
+                child: 
+                Image.network(
+                  'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' +  member.gambar,
+                // Image.network(
+                //   'http://10.0.2.2/api/gambar/' + member.gambar,
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,

@@ -23,8 +23,11 @@ class ProfilePage extends StatelessWidget {
             child: Row(
               children: [
                 ClipOval(
-                  child: Image.network(
-                    'http://10.0.2.2/api/gambar/' + user.gambar,
+                  child: 
+                  Image.network(
+                    'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' + user.gambar,
+                  // Image.network(
+                  //   'http://10.0.2.2/api/gambar/' + user.gambar,
                     width: 70,
                   ),
                 ),

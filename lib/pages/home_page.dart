@@ -49,11 +49,11 @@ class HomePage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: NetworkImage(
-                        'http://10.0.2.2/api/gambar/' + user.gambar)
-                    // AssetImage('assets/image_profile.png'),
+                    image: 
+                    NetworkImage(
+                        'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' + user.gambar)
                     // NetworkImage(
-                    //     'http://localhost/api/gambar/a4e7fbdfb347e471.jpg'),
+                    //     'http://10.0.2.2/api/gambar/' + user.gambar)
                     ),
               ),
             ),
