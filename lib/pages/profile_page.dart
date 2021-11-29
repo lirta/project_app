@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
+import 'package:my_first/services/server.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +24,8 @@ class ProfilePage extends StatelessWidget {
             child: Row(
               children: [
                 ClipOval(
-                  child: 
-                  Image.network(
-                    'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' + user.gambar,
-                  // Image.network(
-                  //   'http://10.0.2.2/api/gambar/' + user.gambar,
+                  child: Image.network(
+                    gambarUrl + user.gambar,
                     width: 70,
                   ),
                 ),
@@ -62,8 +60,8 @@ class ProfilePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Navigator.pushNamedAndRemoveUntil(
-                    //     context, '/sign-in', (route) => false);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/log-in', (route) => false);
                   },
                   child: Image.asset(
                     'assets/exit.png',

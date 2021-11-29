@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_first/model/member_model.dart';
 import 'package:my_first/theme.dart';
+import 'package:my_first/services/server.dart';
 
 class MemeberTitle extends StatelessWidget {
   final MemberModel member;
@@ -9,8 +10,7 @@ class MemeberTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.only(
           left: defaultMargin,
@@ -21,22 +21,12 @@ class MemeberTitle extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: 
-                Image.network(
-                  'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' +  member.gambar,
-                // Image.network(
-                //   'http://10.0.2.2/api/gambar/' + member.gambar,
+                child: Image.network(
+                  gambarUrl + member.gambar,
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,
-                )
-                // Image.network(
-                //   product.galleries[0].url,
-                //   width: 120,
-                //   height: 120,
-                //   fit: BoxFit.cover,
-                // ),
-                ),
+                )),
             SizedBox(
               width: 12,
             ),

@@ -3,12 +3,30 @@ import 'package:my_first/model/user_model.dart';
 import 'package:my_first/pages/member_title.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/provider/member_provider.dart';
-// import 'package:my_first/provider/member_provider.dart';
+import 'package:my_first/services/server.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    refresh();
+    super.initState();
+  }
+
+  // ignore: missing_return
+  Future<bool> refresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      Provider.of<MemberProvider>(context, listen: false).getMember();
+    });
+  }
+
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
@@ -35,7 +53,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${user.gambar}',
+                    '${user.username}',
                     style: wTextStyle.copyWith(
                       fontSize: 16,
                     ),
@@ -49,12 +67,7 @@ class HomePage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: 
-                    NetworkImage(
-                        'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' + user.gambar)
-                    // NetworkImage(
-                    //     'http://10.0.2.2/api/gambar/' + user.gambar)
-                    ),
+                    image: NetworkImage(gambarUrl + user.gambar)),
               ),
             ),
           ],
@@ -94,13 +107,19 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    return Container(
-      child: ListView(
-        children: [
-          header(),
-          newArrivalsTitle(),
-          newArrivals(),
-        ],
+    return RefreshIndicator(
+      // onRefresh: refresh,
+      onRefresh: () async {
+        refresh();
+      },
+      child: Container(
+        child: ListView(
+          children: [
+            header(),
+            newArrivalsTitle(),
+            newArrivals(),
+          ],
+        ),
       ),
     );
   }

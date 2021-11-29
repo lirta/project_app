@@ -42,6 +42,13 @@ class EditEmail extends StatelessWidget {
         if (await authProvider.editEmail(
             email: newEmailController.text, username: user.username)) {
           Navigator.pushNamed(context, '/profile');
+        } else {
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Gagal Edit Email',
+          ).show(context);
         }
       }
     }

@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_first/services/server.dart';
 
 class AuthService {
   // String baseUrl = 'http://10.0.2.2/api/';
-  String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
+  // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
   Future<UserModel> register({
     String name,
@@ -157,8 +158,9 @@ class AuthService {
     print(response.body);
 
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body)['error_msg'];
-      return data;
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      return user;
     } else {
       throw Exception('Gagal Edit password');
     }

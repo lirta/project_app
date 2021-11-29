@@ -13,9 +13,7 @@ class EditPasswordPage extends StatefulWidget {
 
 class _EditPasswordPageState extends State<EditPasswordPage> {
   TextEditingController oldController = TextEditingController(text: '');
-
   TextEditingController newController = TextEditingController(text: '');
-
   TextEditingController comfirController = TextEditingController(text: '');
 
   @override
@@ -54,6 +52,13 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
             newpassword: newController.text,
             password: oldController.text)) {
           Navigator.pushNamed(context, '/home');
+        } else {
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Gagal Ubah Password',
+          ).show(context);
         }
       }
     }

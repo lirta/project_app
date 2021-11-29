@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:my_first/model/member_model.dart';
+import 'package:my_first/services/server.dart';
 
 class MemeberServices {
   // String baseUrl = 'http://10.0.2.2/api/';
-  String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
+  // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
   Future<List<MemberModel>> getMemeber() async {
     var url = '$baseUrl' + 'index.php/member';

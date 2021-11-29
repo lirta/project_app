@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/provider/auth_provider.dart';
+import 'package:my_first/services/server.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +43,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ).show(context);
       } else {
         // String baseUrl = 'http://10.0.2.2/api/';
-        String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
+        // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
         var url = '$baseUrl' + 'InsertGambar.php';
         var uri = Uri.parse(url);
@@ -57,9 +57,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
         if (response.statusCode == 200) {
           if (await authProvider.getUser(email: user.email)) {
             Navigator.pushNamed(context, '/home');
+          } else {
+            Flushbar(
+              duration: Duration(seconds: 4),
+              flushbarPosition: FlushbarPosition.TOP,
+              backgroundColor: Color(0xffff5c83),
+              message: 'Gagal mengambil data user',
+            ).show(context);
           }
         } else {
-          print("Upload Failed");
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Gagal Upload Foto Profile',
+          ).show(context);
         }
       }
     }
@@ -164,11 +176,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: 
-                                  NetworkImage(
-                                    'http://phpstack-91227-2280011.cloudwaysapps.com/api/gambar/' + user.gambar,
-                                  // NetworkImage(
-                                  //   'http://10.0.2.2/api/gambar/' + user.gambar,
+                                  image: NetworkImage(
+                                    gambarUrl + user.gambar,
+                                    // NetworkImage(
+                                    //   'http://10.0.2.2/api/gambar/' + user.gambar,
                                   ))),
                         )
                       : Container(
