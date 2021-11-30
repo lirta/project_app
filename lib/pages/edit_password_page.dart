@@ -77,15 +77,15 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
         title: Text(
           'Edit Password',
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: primaryColor,
-            ),
-            onPressed: () {},
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.check,
+        //       color: primaryColor,
+        //     ),
+        //     onPressed: () {},
+        //   )
+        // ],
       );
     }
 

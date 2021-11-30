@@ -60,15 +60,15 @@ class EditUsername extends StatelessWidget {
         title: Text(
           'Ganti Username',
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: primaryColor,
-            ),
-            onPressed: () {},
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.check,
+        //       color: primaryColor,
+        //     ),
+        //     onPressed: () {},
+        //   )
+        // ],
       );
     }
 

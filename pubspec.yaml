@@ -33,6 +33,7 @@ dependencies:
   provider: ^4.3.3
   another_flushbar: ^1.10.25
   image_picker: ^0.8.4+1
+  shared_preferences: ^2.0.7
 
 dev_dependencies:
   flutter_test:

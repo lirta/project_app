@@ -85,13 +85,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Future<bool> updateImage({String email, String name}) async {
-  //   try {
-  //     UserModel user =
-  //         await AuthService().editprofile(email: email, name: name);
-  //   } catch (e) {}
-  // }
-
   Future<bool> getUser({String email}) async {
     try {
       UserModel user = await AuthService().getuser(

@@ -1,3 +1,4 @@
+// import 'dart:convert';
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
@@ -42,19 +43,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
           message: 'Pilih file gambar',
         ).show(context);
       } else {
-        // String baseUrl = 'http://10.0.2.2/api/';
-        // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
-
         var url = '$baseUrl' + 'InsertGambar.php';
         var uri = Uri.parse(url);
         var request = new http.MultipartRequest("POST", uri);
         var multipartFile =
             await http.MultipartFile.fromPath('filegambar', filegambar.path);
         request.files.add(multipartFile);
-        // request.fields['name'] = name;
         request.fields['email'] = user.email;
         var response = await request.send();
+
         if (response.statusCode == 200) {
+          // print(response);
           if (await authProvider.getUser(email: user.email)) {
             Navigator.pushNamed(context, '/home');
           } else {
@@ -90,49 +89,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: Text(
           'Edit Profile',
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: primaryColor,
-            ),
-            onPressed: () {},
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.check,
+        //       color: primaryColor,
+        //     ),
+        //     onPressed: () {},
+        //   )
+        // ],
       );
     }
-
-    // Widget nameInput() {
-    //   return Container(
-    //     margin: EdgeInsets.only(
-    //       top: 30,
-    //     ),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           'Name',
-    //           style: bTextStyle.copyWith(
-    //             fontSize: 13,
-    //           ),
-    //         ),
-    //         TextFormField(
-    //           controller: nameController,
-    //           style: bTextStyle,
-    //           decoration: InputDecoration(
-    //             hintText: user.name,
-    //             hintStyle: wTextStyle,
-    //             enabledBorder: UnderlineInputBorder(
-    //               borderSide: BorderSide(
-    //                 color: blueColor,
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
 
     // ignore: non_constant_identifier_names
     Widget Update() {

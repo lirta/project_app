@@ -20,8 +20,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   // ignore: missing_return
-  Future<bool> refresh() async {
-    await Future.delayed(Duration(seconds: 2));
+  refresh() async {
+    await Future.delayed(Duration(seconds: 4));
     setState(() {
       Provider.of<MemberProvider>(context, listen: false).getMember();
     });

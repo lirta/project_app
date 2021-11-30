@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${user.username}',
+                        '${user.gambar}',
                         style: bTextStyle.copyWith(
                           fontSize: 14,
                         ),

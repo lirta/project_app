@@ -67,15 +67,15 @@ class EditEmail extends StatelessWidget {
         title: Text(
           'Ganti Email',
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: primaryColor,
-            ),
-            onPressed: () {},
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.check,
+        //       color: primaryColor,
+        //     ),
+        //     onPressed: () {},
+        //   )
+        // ],
       );
     }
 
