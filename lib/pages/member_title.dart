@@ -3,8 +3,9 @@ import 'package:my_first/model/member_model.dart';
 import 'package:my_first/theme.dart';
 import 'package:my_first/services/server.dart';
 
+// ignore: must_be_immutable
 class MemeberTitle extends StatelessWidget {
-  final MemberModel member;
+  MemberModel member;
   MemeberTitle(this.member);
 
   @override

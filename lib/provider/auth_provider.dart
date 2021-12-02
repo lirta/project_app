@@ -91,6 +91,19 @@ class AuthProvider with ChangeNotifier {
         email: email,
       );
       _user = user;
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> edit_profile({String email, String name}) async {
+    try {
+      UserModel user =
+          await AuthService().editProfile(email: email, name: name);
+      _user = user;
+
       return true;
     } catch (e) {
       return false;

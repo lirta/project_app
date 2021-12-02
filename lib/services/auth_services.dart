@@ -23,7 +23,8 @@ class AuthService {
         'name': name,
         'username': username,
         'email': email,
-        'password': password
+        'password': password,
+        'gambar': 'default.jpg'
       },
     );
 
@@ -184,6 +185,22 @@ class AuthService {
       return user;
     } else {
       throw Exception('get data user gagal');
+    }
+  }
+
+  Future<UserModel> editProfile({String email, String name}) async {
+    var url = '$baseUrl' + 'edit_profile.php';
+    var body = {
+      'email': email,
+      'name': name,
+    };
+    var response = await http.post(Uri.parse(url), body: body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      return user;
+    } else {
+      throw Exception('edit profile gagal');
     }
   }
 }

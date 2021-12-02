@@ -50,6 +50,13 @@ class _SingupPageState extends State<SingupPage> {
           backgroundColor: Color(0xffff5c83),
           message: 'Username minimal 6 character',
         ).show(context);
+      } else if (!(emailController.text.contains('@'))) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Inputkan Email Dengan Benar',
+        ).show(context);
       } else {
         //prosess register
         if (await authProvider.register(
@@ -58,6 +65,13 @@ class _SingupPageState extends State<SingupPage> {
             email: emailController.text,
             password: passwordController.text)) {
           Navigator.pushNamed(context, '/home');
+        } else {
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Inputkan Email Dengan Benar',
+          ).show(context);
         }
       }
     }

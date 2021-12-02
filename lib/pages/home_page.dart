@@ -13,19 +13,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    refresh();
+  initState() {
     super.initState();
   }
 
-  // ignore: missing_return
-  refresh() async {
-    await Future.delayed(Duration(seconds: 4));
-    setState(() {
-      Provider.of<MemberProvider>(context, listen: false).getMember();
-    });
+  Future refreshMemeber() async {
+    await Future.delayed(Duration(seconds: 2));
+    Provider.of<MemberProvider>(context, listen: false).getMember();
+    setState(() {});
   }
+
+  @override
+  // void initState() {
+  //   refresh();
+  //   super.initState();
+  // }
+
+  // refresh() async {
+  //   await Future.delayed(Duration(seconds: 4));
+  //   setState(() async {
+  //     await Provider.of<MemberProvider>(context, listen: false).getMember();
+  //   });
+  // }
 
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -108,10 +117,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     return RefreshIndicator(
-      // onRefresh: refresh,
-      onRefresh: () async {
-        refresh();
-      },
+      onRefresh: refreshMemeber, //() => _refreshMemeber(context),
       child: Container(
         child: ListView(
           children: [

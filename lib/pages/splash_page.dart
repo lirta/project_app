@@ -18,7 +18,6 @@ class _SplashPageState extends State<SplashPage> {
 
   getInit() async {
     await Provider.of<MemberProvider>(context, listen: false).getMember();
-
     Navigator.pushNamed(context, '/log-in');
   }
 

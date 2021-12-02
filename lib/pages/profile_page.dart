@@ -37,14 +37,14 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hallo, ${user.name}',
+                        '${user.name}',
                         style: bTextStyle.copyWith(
                           fontSize: 22,
                           fontWeight: semibold,
                         ),
                       ),
                       Text(
-                        '${user.gambar}',
+                        '${user.username}',
                         style: bTextStyle.copyWith(
                           fontSize: 14,
                         ),
