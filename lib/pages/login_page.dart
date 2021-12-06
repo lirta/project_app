@@ -42,15 +42,14 @@ class _LoginPageState extends State<LoginPage> {
         if (await authProvider.login(
             email: emailController.text, password: passwordController.text)) {
           Navigator.pushNamed(context, '/home');
+        } else {
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Login Gagal. Email/Username dan password salah',
+          ).show(context);
         }
-        // else {
-        //   Flushbar(
-        //     duration: Duration(seconds: 4),
-        //     flushbarPosition: FlushbarPosition.TOP,
-        //     backgroundColor: Color(0xffff5c83),
-        //     message: 'Login Gagal. Email/Username dan password salah',
-        //   ).show(context);
-        // }
         // print("NAVIGASI KE HOME PAGE");
       }
     }

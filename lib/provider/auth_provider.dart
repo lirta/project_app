@@ -98,6 +98,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  // ignore: non_constant_identifier_names
   Future<bool> edit_profile({String email, String name}) async {
     try {
       UserModel user =

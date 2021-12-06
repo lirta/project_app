@@ -70,7 +70,7 @@ class _SingupPageState extends State<SingupPage> {
             duration: Duration(seconds: 4),
             flushbarPosition: FlushbarPosition.TOP,
             backgroundColor: Color(0xffff5c83),
-            message: 'Inputkan Email Dengan Benar',
+            message: 'Register Gagal',
           ).show(context);
         }
       }

@@ -35,7 +35,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     UserModel user = authProvider.user;
 
     updateImage() async {
-      if (filegambar == null && nameController == null) {
+      if ((filegambar != null && nameController.text.trim() != "")) {
         //cek file gambar dan name
         Flushbar(
           duration: Duration(seconds: 4),
@@ -56,7 +56,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             message: 'Gagal mengambil data user',
           ).show(context);
         }
-      } else if (nameController.text == null) {
+      } else if (!(nameController.text.trim() != "")) {
         // jika nama kosong
         var url = '$baseUrl' + 'InsertGambar.php';
         var uri = Uri.parse(url);
