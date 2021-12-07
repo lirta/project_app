@@ -19,22 +19,13 @@ class _HomePageState extends State<HomePage> {
 
   Future refreshMemeber() async {
     await Future.delayed(Duration(seconds: 2));
+    setState(() {
     Provider.of<MemberProvider>(context, listen: false).getMember();
-    setState(() {});
+
+    });
   }
 
   @override
-  // void initState() {
-  //   refresh();
-  //   super.initState();
-  // }
-
-  // refresh() async {
-  //   await Future.delayed(Duration(seconds: 4));
-  //   setState(() async {
-  //     await Provider.of<MemberProvider>(context, listen: false).getMember();
-  //   });
-  // }
 
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);

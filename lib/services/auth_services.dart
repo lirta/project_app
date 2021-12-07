@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:my_first/model/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_first/services/server.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -31,6 +32,10 @@ class AuthService {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
       UserModel user = UserModel.fromJson(data);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("is_login", true);
+      prefs.setString("id", user.id);
+      // print(user.id);
 
       return user;
     } else {

@@ -3,15 +3,15 @@ import 'package:my_first/model/device_model.dart';
 import 'package:my_first/services/device_service.dart';
 
 class DeviceProvider with ChangeNotifier {
-  List<DeviceModel> _device = [];
-  List<DeviceModel> get device => _device;
+  DeviceModel _dateDevice;
+  DeviceModel get dataDevice => _dateDevice;
 
-  set device(List<DeviceModel> device) {
-    _device = device;
+  set device(DeviceModel dataDevice) {
+    _dateDevice = dataDevice;
     notifyListeners();
   }
 
-  Future<void> postDevice(
+  Future<bool> postDevice({
       String androidId,
       String device,
       String deviceId,
@@ -20,7 +20,7 @@ class DeviceProvider with ChangeNotifier {
       String deviceManufactur,
       String deviceVersionSDK,
       String deviceProduct,
-      String deviceHost) async {
+      String deviceHost, }) async {
     try {
       DeviceModel dataDevice = await DeviceService().postDevice(
           androidId: androidId,
@@ -32,6 +32,11 @@ class DeviceProvider with ChangeNotifier {
           deviceVersionSDK: deviceVersionSDK,
           deviceProduct: deviceProduct,
           deviceHost: deviceHost);
-    } catch (e) {}
+      _dateDevice = dataDevice;
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }

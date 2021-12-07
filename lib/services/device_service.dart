@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:my_first/model/device_model.dart';
 import 'package:my_first/services/server.dart';
 import 'package:http/http.dart' as http;
 
 class DeviceService {
+  // ignore: missing_return
   Future<DeviceModel> postDevice({
     String androidId,
     String device,
@@ -14,7 +17,7 @@ class DeviceService {
     String deviceProduct,
     String deviceHost,
   }) async {
-    var url = '$baseUrl' + 'device.php';
+    var url = '$baseUrl' + 'add_device.php';
     var response = await http.post(
       Uri.parse(url),
       body: {
@@ -29,6 +32,14 @@ class DeviceService {
         'devdeviceHost': deviceHost,
       },
     );
-    if (response.statusCode == 200) {}
+    print(response.body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['device'];
+      DeviceModel dataDevice = DeviceModel.formJson(data);
+
+      return dataDevice;
+    } else {
+      throw Exception('gagal insert data device');
+    }
   }
 }

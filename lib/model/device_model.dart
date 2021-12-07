@@ -1,4 +1,4 @@
-import 'package:my_first/model/member_model.dart';
+
 
 class DeviceModel {
   String androidId;
