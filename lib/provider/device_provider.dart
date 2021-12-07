@@ -6,13 +6,13 @@ class DeviceProvider with ChangeNotifier {
   DeviceModel _dateDevice;
   DeviceModel get dataDevice => _dateDevice;
 
-  set device(DeviceModel dataDevice) {
+  set dataDevice(DeviceModel dataDevice) {
     _dateDevice = dataDevice;
     notifyListeners();
   }
 
-  Future<bool> postDevice({
-      String androidId,
+  Future<bool> postDevice(
+      {String androidId,
       String device,
       String deviceId,
       String deviceType,
@@ -20,7 +20,10 @@ class DeviceProvider with ChangeNotifier {
       String deviceManufactur,
       String deviceVersionSDK,
       String deviceProduct,
-      String deviceHost, }) async {
+      String deviceHost,
+      String imei,
+      String lat,
+      String long}) async {
     try {
       DeviceModel dataDevice = await DeviceService().postDevice(
           androidId: androidId,
@@ -31,7 +34,10 @@ class DeviceProvider with ChangeNotifier {
           deviceManufactur: deviceManufactur,
           deviceVersionSDK: deviceVersionSDK,
           deviceProduct: deviceProduct,
-          deviceHost: deviceHost);
+          deviceHost: deviceHost,
+          imei: imei,
+          lat: lat,
+          long: long);
       _dateDevice = dataDevice;
       return true;
     } catch (e) {

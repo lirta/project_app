@@ -61,14 +61,14 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Login',
+              'Sign In',
               style: bTextStyle.copyWith(fontSize: 24, fontWeight: semibold),
             ),
             SizedBox(
               height: 2,
             ),
             Text(
-              'Sign In to Continue',
+              'Sign in to continue',
               style: wTextStyle,
             )
           ],
@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
-          child: Text('Log In', style: wTextStyle),
+          child: Text('Sign In', style: wTextStyle),
         ),
       );
     }

@@ -1,5 +1,3 @@
-
-
 class DeviceModel {
   String androidId;
   String device;
@@ -10,6 +8,9 @@ class DeviceModel {
   String deviceVersionSDK;
   String deviceProduct;
   String deviceHost;
+  String imei;
+  String lat;
+  String long;
 
   DeviceModel(
       {this.androidId,
@@ -20,7 +21,10 @@ class DeviceModel {
       this.deviceModel,
       this.deviceProduct,
       this.deviceType,
-      this.deviceVersionSDK});
+      this.deviceVersionSDK,
+      this.imei,
+      this.lat,
+      this.long});
 
   DeviceModel.formJson(Map<String, dynamic> json) {
     androidId = json['androidId'];
@@ -32,6 +36,9 @@ class DeviceModel {
     deviceVersionSDK = json['deviceVersionSDK'];
     deviceProduct = json['deviceProduct'];
     deviceHost = json['deviceHost'];
+    imei = json['imei'];
+    lat = json['lat'];
+    long = json['long'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +52,9 @@ class DeviceModel {
       'deviceProduct': deviceProduct,
       'devdeviceType': deviceType,
       'devdeviceVersionSDK': deviceVersionSDK,
+      'imei': imei,
+      'lat': lat,
+      'long': long
     };
   }
 }

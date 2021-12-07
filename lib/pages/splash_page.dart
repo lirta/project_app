@@ -1,18 +1,14 @@
 // import 'dart:async';
 
-// import 'package:another_flushbar/flushbar.dart';
-import 'dart:convert';
-
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first/model/device_model.dart';
-import 'package:my_first/services/server.dart';
-// import 'package:my_first/provider/device_provider.dart';
+import 'package:my_first/provider/device_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:my_first/provider/member_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:device_info/device_info.dart';
-// import 'package:imei_plugin/imei_plugin.dart';
-import 'package:http/http.dart' as http;
+import 'package:imei_plugin/imei_plugin.dart';
+import 'package:location/location.dart' as location;
 
 class SplashPage extends StatefulWidget {
   @override
@@ -22,20 +18,35 @@ class SplashPage extends StatefulWidget {
 DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
 class _SplashPageState extends State<SplashPage> {
-
+  String lat = "", long = "";
   void initState() {
     getInit();
     super.initState();
-    
   }
-  // ignore: override_on_non_overriding_member
-  // DeviceProvider deviceProvider = Provider.of<DeviceProvider>(context);
-   getInit() async {
+
+  getInit() async {
     await Provider.of<MemberProvider>(context, listen: false).getMember();
     AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-    // DeviceProvider deviceProvider = Provider.of<DeviceProvider>(context, listen: false);
 
-    // var imei = await ImeiPlugin.getImei();
+    DeviceProvider deviceProvider =
+        Provider.of<DeviceProvider>(context, listen: false);
+
+    var imei = await ImeiPlugin.getImei();
+    if (!mounted) return;
+    bool _serviceEnabled;
+    _serviceEnabled = await location.Location().serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.Location().requestService();
+      if (!_serviceEnabled) {
+        print("Location service disabled.");
+        lat = "";
+        long = "";
+      } else {
+        await getPermissionLocation();
+      }
+    } else {
+      await getPermissionLocation();
+    }
     print("Device Info:");
     print(androidInfo.androidId);
     print(androidInfo.device);
@@ -47,77 +58,64 @@ class _SplashPageState extends State<SplashPage> {
     print(androidInfo.product);
     print(androidInfo.host);
     print("imei");
-    // print(imei);
-    var url = '$baseUrl' + 'add_device.php';
-    var response = await http.post(
-      Uri.parse(url),
-      body: {
-        'androidId': androidInfo.androidId,
-        'device': androidInfo.device,
-        'deviceId': androidInfo.id,
-        'devdeviceType': androidInfo.type,
-        'devdeviceModel': androidInfo.model,
-        'devdeviceManufactur': androidInfo.manufacturer,
-        'devdeviceVersionSDK': androidInfo.version.sdkInt.toString(),
-        'devdeviceProduct': androidInfo.product,
-        'devdeviceHost': androidInfo.host,
-      },
-    );
-    print(response.body);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body)['device'];
-      DeviceModel dataDevice = DeviceModel.formJson(data);
-
-      return dataDevice;
+    print(imei);
+    print("lokasi saat ini");
+    print(lat);
+    print("long: $long");
+    if (await deviceProvider.postDevice(
+        androidId: androidInfo.androidId,
+        device: androidInfo.device,
+        deviceId: androidInfo.id,
+        deviceType: androidInfo.type,
+        deviceModel: androidInfo.model,
+        deviceManufactur: androidInfo.manufacturer,
+        deviceVersionSDK: androidInfo.version.sdkInt.toString(),
+        deviceProduct: androidInfo.product,
+        deviceHost: androidInfo.host,
+        imei: imei,
+        lat: lat,
+        long: long)) {
+      Navigator.pushNamed(context, '/log-in');
     } else {
-      throw Exception('gagal insert data device');
+      Flushbar(
+        duration: Duration(seconds: 4),
+        flushbarPosition: FlushbarPosition.TOP,
+        backgroundColor: Color(0xffff5c83),
+        message: 'Gagal inser device',
+      ).show(context);
     }
   }
 
- 
+  getPermissionLocation() async {
+    if (mounted) {
+      location.PermissionStatus _permissionGranted;
+      location.LocationData _locationData;
+      _permissionGranted = await location.Location().hasPermission();
+      print("Permission location hasPermission?");
+      if (_permissionGranted == location.PermissionStatus.denied) {
+        _permissionGranted = await location.Location().requestPermission();
+        if (_permissionGranted != location.PermissionStatus.granted) {
+          print("Permission location denied.");
+          lat = "";
+          long = "";
+        } else {
+          print("Permission location granted 2nd time.");
+          _locationData = await new location.Location().getLocation();
+          lat = _locationData.latitude.toString();
+          long = _locationData.longitude.toString();
+        }
+      } else if (_permissionGranted == location.PermissionStatus.granted) {
+        print("Permission location granted.");
+        _locationData = await new location.Location().getLocation();
+        lat = _locationData.latitude.toString();
+        long = _locationData.longitude.toString();
+      }
+
+      // getIndex(lat, long);
+    }
+  }
 
   @override
-  
-
-  //
-  // void insertDevice() async {
-  //   AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-  //   DeviceProvider deviceProvider = Provider.of<DeviceProvider>(context);
-
-  //   var imei = await ImeiPlugin.getImei();
-  //   print("Device Info:");
-  //   print(androidInfo.androidId);
-  //   print(androidInfo.device);
-  //   print(androidInfo.id);
-  //   print(androidInfo.type);
-  //   print(androidInfo.model);
-  //   print(androidInfo.manufacturer);
-  //   print(androidInfo.version.sdkInt.toString());
-  //   print(androidInfo.product);
-  //   print(androidInfo.host);
-  //   print("imei");
-  //   print(imei);
-  //   if (await deviceProvider.postDevice(
-  //       androidId: androidInfo.androidId,
-  //       device: androidInfo.device,
-  //       deviceId: androidInfo.id,
-  //       deviceType: androidInfo.type,
-  //       deviceModel: androidInfo.model,
-  //       deviceManufactur: androidInfo.manufacturer,
-  //       deviceVersionSDK: androidInfo.version.sdkInt.toString(),
-  //       deviceProduct: androidInfo.product,
-  //       deviceHost: androidInfo.host)) {
-  //     Navigator.pushNamed(context, '/log-in');
-  //   } else {
-  //     Flushbar(
-  //       duration: Duration(seconds: 4),
-  //       flushbarPosition: FlushbarPosition.TOP,
-  //       backgroundColor: Color(0xffff5c83),
-  //       message: 'Gagal inser device',
-  //     ).show(context);
-  //   }
-  // }
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
