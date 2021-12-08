@@ -35,14 +35,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
     UserModel user = authProvider.user;
 
     updateImage() async {
-      if (filegambar == null) {
+      if ((filegambar != null && nameController.text.trim() != "")) {
+        //cek file gambar dan name
         Flushbar(
           duration: Duration(seconds: 4),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Color(0xffff5c83),
           message: 'Pilih file gambar',
         ).show(context);
-      } else {
+      } else if (filegambar == null) {
+        // jika file gambar kosong
+        if (await authProvider.edit_profile(
+            email: user.email, name: nameController.text)) {
+          Navigator.pushNamed(context, '/home');
+        } else {
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Gagal mengambil data user',
+          ).show(context);
+        }
+      } else if (!(nameController.text.trim() != "")) {
+        // jika nama kosong
         var url = '$baseUrl' + 'InsertGambar.php';
         var uri = Uri.parse(url);
         var request = new http.MultipartRequest("POST", uri);
@@ -53,8 +68,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
         var response = await request.send();
 
         if (response.statusCode == 200) {
-          // print(response);
+          print(response.toString());
           if (await authProvider.getUser(email: user.email)) {
+            Navigator.pushNamed(context, '/home');
+          } else {
+            Flushbar(
+              duration: Duration(seconds: 4),
+              flushbarPosition: FlushbarPosition.TOP,
+              backgroundColor: Color(0xffff5c83),
+              message: 'Gagal mengambil data user',
+            ).show(context);
+          }
+        } else {
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Gagal Upload Foto Profile',
+          ).show(context);
+        }
+      } else {
+        // jika ke duanya tidak kosong
+        var url = '$baseUrl' + 'InsertGambar.php';
+        var uri = Uri.parse(url);
+        var request = new http.MultipartRequest("POST", uri);
+        var multipartFile =
+            await http.MultipartFile.fromPath('filegambar', filegambar.path);
+        request.files.add(multipartFile);
+        request.fields['email'] = user.email;
+        var response = await request.send();
+
+        if (response.statusCode == 200) {
+          print(response.toString());
+          if (await authProvider.edit_profile(
+              email: user.email, name: nameController.text)) {
             Navigator.pushNamed(context, '/home');
           } else {
             Flushbar(
@@ -89,15 +136,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: Text(
           'Edit Profile',
         ),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(
-        //       Icons.check,
-        //       color: primaryColor,
-        //     ),
-        //     onPressed: () {},
-        //   )
-        // ],
       );
     }
 
@@ -114,6 +152,38 @@ class _EditProfilePageState extends State<EditProfilePage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
           child: Text('Update', style: wTextStyle),
+        ),
+      );
+    }
+
+    Widget nameInput() {
+      return Container(
+        margin: EdgeInsets.only(
+          top: 30,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Name',
+              style: bTextStyle.copyWith(
+                fontSize: 13,
+              ),
+            ),
+            TextFormField(
+              controller: nameController,
+              style: bTextStyle,
+              decoration: InputDecoration(
+                hintText: user.name,
+                hintStyle: bTextStyle,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: blueColor,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
@@ -158,7 +228,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               )),
                         )),
             ),
-            // nameInput(),
+            nameInput(),
             // usernameInput(),
             Update()
           ],

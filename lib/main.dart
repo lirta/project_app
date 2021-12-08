@@ -9,6 +9,7 @@ import 'package:my_first/pages/splash_page.dart';
 import 'package:my_first/pages/login_page.dart';
 import 'package:my_first/pages/sing_up_page.dart';
 import 'package:my_first/provider/auth_provider.dart';
+import 'package:my_first/provider/device_provider.dart';
 import 'package:my_first/provider/member_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,13 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => AuthProvider()
-          ),
-          ChangeNotifierProvider(
-            create: (context) => MemberProvider(),
-          )
-          ],
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => MemberProvider()),
+        ChangeNotifierProvider(create: (context) => DeviceProvider())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {

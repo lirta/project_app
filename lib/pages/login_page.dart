@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
+  bool isLoading = false;
 
   GlobalKey<FormState> formKy = GlobalKey<FormState>();
   GlobalKey<ScaffoldMessengerState> scaffolMessengerKey =
@@ -23,6 +24,9 @@ class _LoginPageState extends State<LoginPage> {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     handleLogin() async {
+      setState(() {
+        isLoading = true;
+      });
       if (!(passwordController.text.trim() != "" &&
           emailController.text.trim() != "")) {
         Flushbar(
@@ -52,6 +56,9 @@ class _LoginPageState extends State<LoginPage> {
         }
         // print("NAVIGASI KE HOME PAGE");
       }
+      setState(() {
+        isLoading = false;
+      });
     }
 
     Widget header() {
@@ -61,14 +68,14 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Login',
+              'Sign In',
               style: bTextStyle.copyWith(fontSize: 24, fontWeight: semibold),
             ),
             SizedBox(
               height: 2,
             ),
             Text(
-              'Sign In to Continue',
+              'Sign in to continue',
               style: wTextStyle,
             )
           ],
@@ -168,7 +175,12 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
-          child: Text('Log In', style: wTextStyle),
+          child: isLoading == false
+              ? Text('Sign In', style: wTextStyle)
+              : CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation(whiteColor),
+                ),
         ),
       );
     }

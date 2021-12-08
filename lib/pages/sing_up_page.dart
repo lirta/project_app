@@ -19,12 +19,15 @@ class _SingupPageState extends State<SingupPage> {
   TextEditingController phoneController = TextEditingController(text: '');
 
   TextEditingController passwordController = TextEditingController(text: '');
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     handleSingUp() async {
+      setState(() {
+        isLoading = true;
+      });
       // validasi
       if (!(passwordController.text.trim() != "" &&
           emailController.text.trim() != "" &&
@@ -74,6 +77,10 @@ class _SingupPageState extends State<SingupPage> {
           ).show(context);
         }
       }
+
+      setState(() {
+        isLoading = false;
+      });
     }
 
     Widget header() {
@@ -273,7 +280,12 @@ class _SingupPageState extends State<SingupPage> {
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
-          child: Text('Sign Up', style: wTextStyle),
+          child: isLoading == false
+              ? Text('Sign Up', style: wTextStyle)
+              : CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation(whiteColor),
+                ),
         ),
       );
     }
