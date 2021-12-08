@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_first/theme.dart';
-import 'package:my_first/provider/member_provider.dart';
-import 'package:provider/provider.dart';
+// import 'package:my_first/provider/member_provider.dart';
+// import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   getInit() async {
-    await Provider.of<MemberProvider>(context, listen: false).getMember();
+    // await Provider.of<MemberProvider>(context, listen: false).getMember();
 
     Navigator.pushNamed(context, '/log-in');
   }

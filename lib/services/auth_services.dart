@@ -23,10 +23,11 @@ class AuthService {
         'name': name,
         'username': username,
         'email': email,
-        'password': password
+        'password': password,
+        'gambar': 'default.jpg'
       },
     );
-
+    print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
       UserModel user = UserModel.fromJson(data);
