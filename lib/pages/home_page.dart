@@ -3,7 +3,7 @@
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'package:my_first/model/device_model.dart';
+// import 'package:my_first/model/device_model.dart';
 // import 'package:my_first/model/device_model.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/pages/member_title.dart';
@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   // @override
   void initState() {
     _getCurrentLocation();
+    _refreshMember(context);
     // getPermissionLocation();
     super.initState();
   }
