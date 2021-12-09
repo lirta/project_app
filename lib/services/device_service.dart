@@ -43,10 +43,10 @@ class DeviceService {
     );
     if (response.statusCode == 200) {
       print(response.body);
-      // print("insert data berhasil");
-      var data = jsonDecode(response.body)['device'];
-      DeviceModel dataDevice = DeviceModel.formJson(data);
-      return dataDevice;
+      print("insert data berhasil");
+      // var data = jsonDecode(response.body)['device'];
+      // DeviceModel dataDevice = DeviceModel.fromJson(data);
+      // return dataDevice;
     } else {
       throw Exception('gagal insert data device');
     }
@@ -64,6 +64,7 @@ class DeviceService {
       'long': long
     });
     if (response.statusCode == 200) {
+      print(response.body);
       print("berhasil");
     }
   }

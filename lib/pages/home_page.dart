@@ -1,11 +1,13 @@
 // import 'dart:convert';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:my_first/model/device_model.dart';
 // import 'package:my_first/model/device_model.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/pages/member_title.dart';
+import 'package:my_first/pages/splash_page.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/provider/device_provider.dart';
 // import 'package:my_first/provider/device_provider.dart';
@@ -30,11 +32,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _getCurrentLocation() async {
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
+    AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
     DeviceProvider deviceProvider =
         Provider.of<DeviceProvider>(context, listen: false);
-    DeviceModel device = deviceProvider.dataDevice;
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     UserModel user = authProvider.user;
     if (!mounted) return;
     Location location = new Location();
@@ -67,64 +69,10 @@ class _HomePageState extends State<HomePage> {
     print("latitude : " + lat);
     print("longitude : " + long);
     print(user.id);
-    print(device.deviceId);
+    print(androidInfo.id);
+    await deviceProvider.updateDevice(
+        userId: user.id, deviceId: androidInfo.id, lat: lat, long: long);
   }
-
-  // upDevice() async {
-  //   AuthProvider authProvider = Provider.of<AuthProvider>(context);
-  //   DeviceProvider deviceProvider = Provider.of<DeviceProvider>(context);
-  //   DeviceModel device = deviceProvider.dataDevice;
-  //   UserModel user = authProvider.user;
-  //   if (!mounted) return;
-  //   bool _serviceEnabled;
-  //   _serviceEnabled = await location.Location().serviceEnabled();
-  //   if (!_serviceEnabled) {
-  //     _serviceEnabled = await location.Location().requestService();
-  //     if (!_serviceEnabled) {
-  //       print("Location service disabled.");
-  //       lat = "";
-  //       long = "";
-  //     } else {
-  //       await getPermissionLocation();
-  //     }
-  //   } else {
-  //     await getPermissionLocation();
-  //   }
-
-  //   print(device.deviceId);
-  //   print(long);
-  //   print(lat);
-  //   print(user.id);
-  // }
-
-  // getPermissionLocation() async {
-  //   if (mounted) {
-  //     location.PermissionStatus _permissionGranted;
-  //     location.LocationData _locationData;
-  //     _permissionGranted = await location.Location().hasPermission();
-  //     print("Permission location hasPermission?");
-  //     if (_permissionGranted == location.PermissionStatus.denied) {
-  //       _permissionGranted = await location.Location().requestPermission();
-  //       if (_permissionGranted != location.PermissionStatus.granted) {
-  //         print("Permission location denied.");
-  //         lat = "";
-  //         long = "";
-  //       } else {
-  //         print("Permission location granted 2nd time.");
-  //         _locationData = await new location.Location().getLocation();
-  //         lat = _locationData.latitude.toString();
-  //         long = _locationData.longitude.toString();
-  //       }
-  //     } else if (_permissionGranted == location.PermissionStatus.granted) {
-  //       print("Permission location granted.");
-  //       _locationData = await new location.Location().getLocation();
-  //       lat = _locationData.latitude.toString();
-  //       long = _locationData.longitude.toString();
-  //     }
-
-  //     // getIndex(lat, long);
-  //   }
-  // }
 
   Future<void> _refreshMember(BuildContext context) async {
     await Provider.of<MemberProvider>(context, listen: false).getMember();

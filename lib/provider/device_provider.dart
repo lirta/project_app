@@ -3,11 +3,11 @@ import 'package:my_first/model/device_model.dart';
 import 'package:my_first/services/device_service.dart';
 
 class DeviceProvider with ChangeNotifier {
-  DeviceModel _dateDevice;
-  DeviceModel get dataDevice => _dateDevice;
+  DeviceModel _dataDevice;
+  DeviceModel get dataDevice => _dataDevice;
 
   set dataDevice(DeviceModel dataDevice) {
-    _dateDevice = dataDevice;
+    _dataDevice = dataDevice;
     notifyListeners();
   }
 
@@ -40,7 +40,7 @@ class DeviceProvider with ChangeNotifier {
           lat: lat,
           long: long,
           userId: userId);
-      _dateDevice = dataDevice;
+      _dataDevice = dataDevice;
       return true;
     } catch (e) {
       print(e);
@@ -53,7 +53,7 @@ class DeviceProvider with ChangeNotifier {
     try {
       DeviceModel dataDevice = await DeviceService()
           .update(userId: userId, deviceId: deviceId, lat: lat, long: long);
-      _dateDevice = dataDevice;
+      _dataDevice = dataDevice;
       return true;
     } catch (e) {
       print(e);

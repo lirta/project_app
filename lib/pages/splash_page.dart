@@ -32,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
         Provider.of<DeviceProvider>(context, listen: false);
 
     var imei = await ImeiPlugin.getImei();
-    var userId = 0;
+    String userId = "0";
     if (!mounted) return;
     bool _serviceEnabled;
     _serviceEnabled = await location.Location().serviceEnabled();
@@ -76,10 +76,10 @@ class _SplashPageState extends State<SplashPage> {
         imei: imei,
         lat: lat,
         long: long,
-        userId: userId.toString())) {
+        userId: userId)) {
       Navigator.pushNamed(context, '/log-in');
     } else {
-      Navigator.pushNamed(context, '/log-in');
+      // Navigator.pushNamed(context, '/log-in');
     }
   }
 
@@ -107,8 +107,6 @@ class _SplashPageState extends State<SplashPage> {
         lat = _locationData.latitude.toString();
         long = _locationData.longitude.toString();
       }
-
-      // getIndex(lat, long);
     }
   }
 
