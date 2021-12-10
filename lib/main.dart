@@ -12,8 +12,19 @@ import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/provider/device_provider.dart';
 import 'package:my_first/provider/member_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() {
+  //Remove this method to stop OneSignal Debugging
+  // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  WidgetsFlutterBinding.ensureInitialized();
+
+  OneSignal.shared.init("b2feb0ca-6821-4983-90f2-c05b85250d4d");
+
+// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+  OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+    print("Accepted permission: $accepted");
+  });
   runApp(MyApp());
 }
 

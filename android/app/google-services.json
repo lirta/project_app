@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "425021183889",
+    "project_id": "onesignaltes-4a084",
+    "storage_bucket": "onesignaltes-4a084.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425021183889:android:b26c2821ac0b225102ec30",
+        "android_client_info": {
+          "package_name": "com.my.first.my_first"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425021183889-pt4ufonmdtq7u61l8htaog0h6hm1gs95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.my.first.my_first",
+            "certificate_hash": "745316189dd034f0ccd565a26204bb1d62a49adb"
+          }
+        },
+        {
+          "client_id": "425021183889-bmn3giaunl93ptkat9q09kk4l5839g53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi-9FtlWEZ2CG14dZJKOxEuCtKWSjnFqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425021183889-bmn3giaunl93ptkat9q09kk4l5839g53.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

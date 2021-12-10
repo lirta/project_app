@@ -14,6 +14,7 @@ import 'package:my_first/provider/device_provider.dart';
 import 'package:my_first/provider/member_provider.dart';
 import 'package:my_first/services/server.dart';
 import 'package:my_first/theme.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 // import 'package:location/location.dart' as location;
 
@@ -24,12 +25,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String lat = "", long = "";
-  // @override
+  String title = "", body = "";
+  @override
   void initState() {
     _getCurrentLocation();
     _refreshMember(context);
     // getPermissionLocation();
     super.initState();
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification) {
+      setState(() {
+        title = notification.payload.title;
+        body = notification.payload.body;
+      });
+    });
   }
 
   _getCurrentLocation() async {

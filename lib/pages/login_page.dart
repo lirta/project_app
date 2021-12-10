@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 
@@ -185,6 +186,29 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
+    Widget loginEmail() {
+      return Container(
+        height: 50,
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 30),
+        child: TextButton(
+          onPressed: () {
+            GoogleSignIn().signIn();
+          },
+          style: TextButton.styleFrom(
+              backgroundColor: yColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12))),
+          child: isLoading == false
+              ? Text('Sign With Email', style: bTextStyle)
+              : CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation(whiteColor),
+                ),
+        ),
+      );
+    }
+
     Widget registrasi() {
       return Container(
         margin: EdgeInsets.only(top: 40),
@@ -213,17 +237,20 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              header(),
-              email(),
-              password(),
-              loginBotton(),
-              registrasi()
-            ],
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                header(),
+                email(),
+                password(),
+                loginBotton(),
+                loginEmail(),
+                registrasi()
+              ],
+            ),
           ),
         ),
       ),
