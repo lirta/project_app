@@ -273,9 +273,6 @@ class _SingupPageState extends State<SingupPage> {
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
           onPressed: handleSingUp,
-          //     () {
-          //   Register();
-          // },
           style: TextButton.styleFrom(
               backgroundColor: blueColor,
               shape: RoundedRectangleBorder(

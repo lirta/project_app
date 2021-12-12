@@ -128,7 +128,8 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: NetworkImage(gambarUrl + user.gambar)),
+                    image: NetworkImage(gambarUrl + user.gambar)
+                    ),
               ),
             ),
           ],

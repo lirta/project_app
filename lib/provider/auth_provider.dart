@@ -28,6 +28,21 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+
+  Future<bool> loginGoogle(
+      {String name, String email, String gambar}) async {
+    try {
+      UserModel user = await AuthService().loginGoogle(
+          name: name, email: email, gambar: gambar);
+      _user = user;
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> login({String email, String password}) async {
     try {
       UserModel user =

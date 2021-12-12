@@ -42,6 +42,35 @@ class AuthService {
       throw Exception('Gagal Register');
     }
   }
+  Future<UserModel> loginGoogle({
+    String name,
+    String email,
+    String gambar,
+  }) async {
+    var url = '$baseUrl' + 'login_google.php';
+
+    var response = await http.post(
+      Uri.parse(url),
+      body: {
+        'name': name,
+        'email': email,
+        'gambar': gambar
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setBool("is_login", true);
+      // prefs.setString("id", user.id);
+      // print(user.id);
+
+      return user;
+    } else {
+      throw Exception('Gagal Login with Google');
+    }
+  }
 
   Future<UserModel> login({
     String email,

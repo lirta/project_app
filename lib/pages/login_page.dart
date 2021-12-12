@@ -24,6 +24,22 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
+    handleLoginGoogle() async {
+      var _googleSignin = GoogleSignIn();
+      GoogleSignInAccount _googleAccount;
+      _googleAccount = await _googleSignin.signIn();
+      print(_googleAccount.displayName);
+      print(_googleAccount.email);
+      print(_googleAccount.id);
+      print(_googleAccount.photoUrl);
+      if (await authProvider.loginGoogle(
+          name: _googleAccount.displayName,
+          email: _googleAccount.email,
+          gambar: _googleAccount.photoUrl)) {
+        Navigator.pushNamed(context, '/home');
+      }
+    }
+
     handleLogin() async {
       setState(() {
         isLoading = true;
@@ -192,19 +208,19 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {
-            GoogleSignIn().signIn();
-          },
+          onPressed: handleLoginGoogle,
           style: TextButton.styleFrom(
               backgroundColor: yColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
-          child: isLoading == false
-              ? Text('Sign With Email', style: bTextStyle)
-              : CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation(whiteColor),
-                ),
+          child: 
+          // isLoading == false
+          //     ? 
+              Text('Sign With Email', style: bTextStyle),
+              // : CircularProgressIndicator(
+              //     strokeWidth: 2,
+              //     valueColor: AlwaysStoppedAnimation(whiteColor),
+              //   ),
         ),
       );
     }
