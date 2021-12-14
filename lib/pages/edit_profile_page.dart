@@ -69,7 +69,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
         if (response.statusCode == 200) {
           print(response.toString());
-          if (await authProvider.getUser(email: user.email)) {
+          if (await authProvider.getuser(email: user.email)) {
             Navigator.pushNamed(context, '/home');
           } else {
             Flushbar(

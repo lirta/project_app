@@ -37,6 +37,10 @@ class _LoginPageState extends State<LoginPage> {
           email: _googleAccount.email,
           gambar: _googleAccount.photoUrl)) {
         Navigator.pushNamed(context, '/home');
+        print("login berhasil");
+      } else {
+        // Navigator.pushNamed(context, '/home');
+        print("gagal login gagal");
       }
     }
 
@@ -213,14 +217,14 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: yColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
-          child: 
-          // isLoading == false
-          //     ? 
+          child:
+              // isLoading == false
+              //     ?
               Text('Sign With Email', style: bTextStyle),
-              // : CircularProgressIndicator(
-              //     strokeWidth: 2,
-              //     valueColor: AlwaysStoppedAnimation(whiteColor),
-              //   ),
+          // : CircularProgressIndicator(
+          //     strokeWidth: 2,
+          //     valueColor: AlwaysStoppedAnimation(whiteColor),
+          //   ),
         ),
       );
     }

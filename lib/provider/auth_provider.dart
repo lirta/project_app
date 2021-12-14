@@ -14,6 +14,17 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> getUser({String id}) async {
+    try {
+      UserModel user = await AuthService().cekLogin(id: id);
+      _user = user;
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> register(
       {String name, String username, String email, String password}) async {
     try {
@@ -28,12 +39,10 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-
-  Future<bool> loginGoogle(
-      {String name, String email, String gambar}) async {
+  Future<bool> loginGoogle({String name, String email, String gambar}) async {
     try {
-      UserModel user = await AuthService().loginGoogle(
-          name: name, email: email, gambar: gambar);
+      UserModel user = await AuthService()
+          .loginGoogle(name: name, email: email, gambar: gambar);
       _user = user;
 
       return true;
@@ -100,7 +109,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getUser({String email}) async {
+  Future<bool> getuser({String email}) async {
     try {
       UserModel user = await AuthService().getuser(
         email: email,

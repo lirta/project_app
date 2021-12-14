@@ -4,6 +4,7 @@ import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/services/server.dart';
 import 'package:my_first/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -59,7 +60,11 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.remove("id");
+                    prefs.setBool("is_login", false);
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/log-in', (route) => false);
                   },

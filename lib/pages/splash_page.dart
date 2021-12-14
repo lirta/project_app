@@ -2,6 +2,7 @@
 
 // import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/provider/device_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:my_first/provider/member_provider.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:device_info/device_info.dart';
 import 'package:imei_plugin/imei_plugin.dart';
 import 'package:location/location.dart' as location;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -19,9 +21,38 @@ DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
 class _SplashPageState extends State<SplashPage> {
   String lat = "", long = "";
+  // bool isLogin = false;
+  String id = "";
   void initState() {
     getInit();
+    cekLogin();
     super.initState();
+  }
+
+  cekLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var isLogin = prefs.getBool("is_login");
+    id = prefs.getString("id");
+    // print(id);
+    // print(isLogin);
+
+    // ignore: unrelated_type_equality_checks
+    if (isLogin == true) {
+      AuthProvider authProvider =
+          Provider.of<AuthProvider>(context, listen: false);
+      if (await authProvider.getUser(id: id)) {
+        Navigator.pushNamed(context, '/home');
+        print("sudah login");
+      } else {
+        print("error get data");
+        Navigator.pushNamed(context, '/log-in');
+        print(isLogin);
+        print(id);
+      }
+    } else {
+      print("belumlogin");
+      Navigator.pushNamed(context, '/log-in');
+    }
   }
 
   getInit() async {
@@ -77,7 +108,6 @@ class _SplashPageState extends State<SplashPage> {
         lat: lat,
         long: long,
         userId: userId)) {
-      Navigator.pushNamed(context, '/log-in');
     } else {
       // Navigator.pushNamed(context, '/log-in');
     }

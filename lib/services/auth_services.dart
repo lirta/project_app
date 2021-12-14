@@ -10,6 +10,25 @@ class AuthService {
   // String baseUrl = 'http://10.0.2.2/api/';
   // String baseUrl = 'http://phpstack-91227-2280011.cloudwaysapps.com/api/';
 
+  Future<UserModel> cekLogin({String id}) async {
+    var url = '$baseUrl' + 'getUser.php';
+
+    var response = await http.post(
+      Uri.parse(url),
+      body: {'id': id},
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['user'];
+      UserModel user = UserModel.fromJson(data);
+      // print(user.id);
+
+      return user;
+    } else {
+      throw Exception('Gagal Register');
+    }
+  }
+
   Future<UserModel> register({
     String name,
     String username,
@@ -42,6 +61,7 @@ class AuthService {
       throw Exception('Gagal Register');
     }
   }
+
   Future<UserModel> loginGoogle({
     String name,
     String email,
@@ -51,20 +71,16 @@ class AuthService {
 
     var response = await http.post(
       Uri.parse(url),
-      body: {
-        'name': name,
-        'email': email,
-        'gambar': gambar
-      },
+      body: {'name': name, 'email': email, 'gambar': gambar},
     );
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
+      print(data);
       UserModel user = UserModel.fromJson(data);
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-      // prefs.setBool("is_login", true);
-      // prefs.setString("id", user.id);
-      // print(user.id);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("is_login", true);
+      prefs.setString("id", user.id);
 
       return user;
     } else {
@@ -90,6 +106,9 @@ class AuthService {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
       UserModel user = UserModel.fromJson(data);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("is_login", true);
+      prefs.setString("id", user.id);
       return user;
     } else {
       throw Exception('Gagal login');
@@ -212,7 +231,7 @@ class AuthService {
       Uri.parse(url),
       body: body,
     );
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
       UserModel user = UserModel.fromJson(data);
