@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _refreshMember(BuildContext context) async {
     await Provider.of<MemberProvider>(context, listen: false).getMember();
+    setState(() {});
   }
 
   @override
@@ -113,23 +114,22 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: semibold,
                     ),
                   ),
-                  Text(
-                    '${user.username}',
-                    style: wTextStyle.copyWith(
-                      fontSize: 16,
-                    ),
-                  ),
+                  // Text(
+                  //   '${user.username}',
+                  //   style: wTextStyle.copyWith(
+                  //     fontSize: 16,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
             Container(
-              width: 54,
-              height: 54,
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: NetworkImage(gambarUrl + user.gambar)
-                    ),
+                    image: NetworkImage(gambarUrl + user.gambar)),
               ),
             ),
           ],
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
           right: defaultMargin,
         ),
         child: Text(
-          'Member',
+          'List Member',
           style: wTextStyle.copyWith(
             fontSize: 22,
             fontWeight: semibold,
@@ -169,6 +169,15 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    // return Scaffold(
+    //     backgroundColor: blueColor,
+    //     resizeToAvoidBottomInset: false,
+    //     body: SafeArea(
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [header(), newArrivalsTitle()],
+    //       ),
+    //     ));
     return RefreshIndicator(
       // onRefresh: refresh,
       onRefresh: () => _refreshMember(context),
