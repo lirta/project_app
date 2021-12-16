@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     print(user.id);
     print(androidInfo.id);
     await deviceProvider.updateDevice(
-        userId: user.id, deviceId: androidInfo.id, lat: lat, long: long);
+        userId: user.id, deviceId: androidInfo.androidId, lat: lat, long: long);
   }
 
   Future<void> _refreshMember(BuildContext context) async {

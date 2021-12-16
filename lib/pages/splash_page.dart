@@ -1,6 +1,8 @@
 // import 'dart:async';
 
 // import 'package:another_flushbar/flushbar.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/provider/device_provider.dart';
@@ -57,6 +59,7 @@ class _SplashPageState extends State<SplashPage> {
 
   getInit() async {
     await Provider.of<MemberProvider>(context, listen: false).getMember();
+    DeviceInfoPlugin _devceInfoPlugin = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
 
     DeviceProvider deviceProvider =
@@ -64,6 +67,7 @@ class _SplashPageState extends State<SplashPage> {
 
     var imei = await ImeiPlugin.getImei();
     String userId = "0";
+
     if (!mounted) return;
     bool _serviceEnabled;
     _serviceEnabled = await location.Location().serviceEnabled();
@@ -79,37 +83,68 @@ class _SplashPageState extends State<SplashPage> {
     } else {
       await getPermissionLocation();
     }
-    print("Device Info:");
-    print(androidInfo.androidId);
-    print(androidInfo.device);
-    print(androidInfo.id);
-    print(androidInfo.type);
-    print(androidInfo.model);
-    print(androidInfo.manufacturer);
-    print(androidInfo.version.sdkInt.toString());
-    print(androidInfo.product);
-    print(androidInfo.host);
-    print("imei");
-    print(imei);
-    print("lokasi saat ini");
-    print(lat);
-    print(long);
-    if (await deviceProvider.postDevice(
-        androidId: androidInfo.androidId,
-        device: androidInfo.device,
-        deviceId: androidInfo.id,
-        deviceType: androidInfo.type,
-        deviceModel: androidInfo.model,
-        deviceManufactur: androidInfo.manufacturer,
-        deviceVersionSDK: androidInfo.version.sdkInt.toString(),
-        deviceProduct: androidInfo.product,
-        deviceHost: androidInfo.host,
-        imei: imei,
-        lat: lat,
-        long: long,
-        userId: userId)) {
-    } else {
-      // Navigator.pushNamed(context, '/log-in');
+
+    if (Platform.isAndroid) {
+      var deviceOsType = "Android";
+      AndroidDeviceInfo androidInfo = await _devceInfoPlugin.androidInfo;
+      print(androidInfo.androidId);
+      print(userId);
+      print(androidInfo.model);
+      print(androidInfo.manufacturer + androidInfo.model);
+      print(androidInfo.manufacturer);
+      print(androidInfo.model);
+      print(androidInfo.version.sdkInt.toString());
+      print(androidInfo.product);
+      print(androidInfo.version.release);
+      print(androidInfo.board);
+      print(androidInfo.brand);
+      print(androidInfo.host);
+      print(androidInfo.type);
+      print("imei");
+      print(imei);
+      print("lokasi saat ini");
+      print(lat);
+      print(long);
+      if (await deviceProvider.postDevice(
+          deviceId: androidInfo.androidId,
+          userId: userId,
+          deviceOsType: deviceOsType,
+          deviceName: androidInfo.manufacturer + androidInfo.model,
+          deviceManufactur: androidInfo.manufacturer,
+          deviceModel: androidInfo.model,
+          deviceSDK: androidInfo.version.sdkInt.toString(),
+          deviceProduct: androidInfo.product,
+          deviceOsVersion: androidInfo.version.release,
+          deviceBoard: androidInfo.board,
+          deviceBrand: androidInfo.brand,
+          deviceDisplay: androidInfo.display,
+          deviceHardware: androidInfo.hardware,
+          deviceHost: androidInfo.host,
+          deviceType: androidInfo.type,
+          deviceImei: imei,
+          deviceLat: lat,
+          deviceLong: long)) {
+        print("inser data device berhasil");
+      } else {
+        print("inser data device gagal");
+      }
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await _devceInfoPlugin.iosInfo;
+      print("Device Info: Ios");
+      print(iosInfo.identifierForVendor);
+      print(iosInfo.isPhysicalDevice);
+      print(iosInfo.name);
+      print(iosInfo.runtimeType);
+      print(androidInfo.model);
+      print(androidInfo.manufacturer);
+      print(androidInfo.version.sdkInt.toString());
+      print(androidInfo.product);
+      print(androidInfo.host);
+      print("imei");
+      print(imei);
+      print("lokasi saat ini");
+      print(lat);
+      print(long);
     }
   }
 

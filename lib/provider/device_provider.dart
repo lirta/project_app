@@ -12,34 +12,45 @@ class DeviceProvider with ChangeNotifier {
   }
 
   Future<bool> postDevice(
-      {String androidId,
-      String device,
-      String deviceId,
-      String deviceType,
-      String deviceModel,
+      {String deviceId,
+      String userId,
+      String deviceOsType,
+      String deviceName,
       String deviceManufactur,
-      String deviceVersionSDK,
+      String deviceModel,
+      String deviceSDK,
       String deviceProduct,
+      String deviceOsVersion,
+      String deviceBoard,
+      String deviceBrand,
+      String deviceDisplay,
+      String deviceHardware,
       String deviceHost,
-      String imei,
-      String lat,
-      String long,
-      String userId}) async {
+      String deviceType,
+      String deviceImei,
+      String deviceLat,
+      String deviceLong}) async {
     try {
       DeviceModel dataDevice = await DeviceService().postDevice(
-          androidId: androidId,
-          device: device,
-          deviceId: deviceId,
-          deviceType: deviceType,
-          deviceModel: deviceModel,
-          deviceManufactur: deviceManufactur,
-          deviceVersionSDK: deviceVersionSDK,
-          deviceProduct: deviceProduct,
-          deviceHost: deviceHost,
-          imei: imei,
-          lat: lat,
-          long: long,
-          userId: userId);
+        deviceId: deviceId,
+        userId: userId,
+        deviceOsType: deviceOsType,
+        deviceName: deviceName,
+        deviceManufactur: deviceManufactur,
+        deviceModel: deviceModel,
+        deviceSDK: deviceSDK,
+        deviceProduct: deviceProduct,
+        deviceOsVersion: deviceOsVersion,
+        deviceBoard: deviceBoard,
+        deviceBrand: deviceBrand,
+        deviceDisplay: deviceDisplay,
+        deviceHardware: deviceHardware,
+        deviceHost: deviceHost,
+        deviceType: deviceType,
+        deviceImei: deviceImei,
+        deviceLat: deviceLat,
+        deviceLong: deviceLong,
+      );
       _dataDevice = dataDevice;
       return true;
     } catch (e) {
