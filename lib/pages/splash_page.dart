@@ -129,6 +129,7 @@ class _SplashPageState extends State<SplashPage> {
         print("inser data device gagal");
       }
     } else if (Platform.isIOS) {
+      var deviceOsType = "iOS";
       IosDeviceInfo iosInfo = await _devceInfoPlugin.iosInfo;
       print("Device Info: Ios");
       print(iosInfo.identifierForVendor);
@@ -145,6 +146,29 @@ class _SplashPageState extends State<SplashPage> {
       print("lokasi saat ini");
       print(lat);
       print(long);
+      if (await deviceProvider.postDevice(
+          deviceId: iosInfo.identifierForVendor,
+          userId: userId,
+          deviceOsType: deviceOsType,
+          deviceName: iosInfo.name,
+          deviceManufactur: "0",
+          deviceModel: iosInfo.model,
+          deviceSDK: "0",
+          deviceProduct: "0",
+          deviceOsVersion: iosInfo.systemName,
+          deviceBoard: "0",
+          deviceBrand: "0",
+          deviceDisplay: "0",
+          deviceHardware: "0",
+          deviceHost: "0",
+          deviceType: "0",
+          deviceImei: imei,
+          deviceLat: lat,
+          deviceLong: long)) {
+        print("inser data device berhasil");
+      } else {
+        print("inser data device gagal");
+      }
     }
   }
 

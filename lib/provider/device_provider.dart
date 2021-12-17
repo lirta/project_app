@@ -60,10 +60,16 @@ class DeviceProvider with ChangeNotifier {
   }
 
   Future<bool> updateDevice(
-      {String userId, String deviceId, String lat, String long}) async {
+      {String userId,
+      String deviceId,
+      String deviceLat,
+      String devicelong}) async {
     try {
-      DeviceModel dataDevice = await DeviceService()
-          .update(userId: userId, deviceId: deviceId, lat: lat, long: long);
+      DeviceModel dataDevice = await DeviceService().update(
+          userId: userId,
+          deviceId: deviceId,
+          deviceLat: deviceLat,
+          deviceLong: devicelong);
       _dataDevice = dataDevice;
       return true;
     } catch (e) {
