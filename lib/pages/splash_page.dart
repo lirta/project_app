@@ -60,7 +60,7 @@ class _SplashPageState extends State<SplashPage> {
   getInit() async {
     await Provider.of<MemberProvider>(context, listen: false).getMember();
     DeviceInfoPlugin _devceInfoPlugin = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+    // AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
 
     DeviceProvider deviceProvider =
         Provider.of<DeviceProvider>(context, listen: false);
@@ -129,22 +129,41 @@ class _SplashPageState extends State<SplashPage> {
         print("inser data device gagal");
       }
     } else if (Platform.isIOS) {
+      var deviceOsType = "iOS";
       IosDeviceInfo iosInfo = await _devceInfoPlugin.iosInfo;
       print("Device Info: Ios");
       print(iosInfo.identifierForVendor);
       print(iosInfo.isPhysicalDevice);
       print(iosInfo.name);
       print(iosInfo.runtimeType);
-      print(androidInfo.model);
-      print(androidInfo.manufacturer);
-      print(androidInfo.version.sdkInt.toString());
-      print(androidInfo.product);
-      print(androidInfo.host);
       print("imei");
       print(imei);
       print("lokasi saat ini");
       print(lat);
       print(long);
+      if (await deviceProvider.postDevice(
+          deviceId: iosInfo.identifierForVendor,
+          userId: userId,
+          deviceOsType: deviceOsType,
+          deviceName: iosInfo.name,
+          deviceManufactur: "0",
+          deviceModel: iosInfo.model,
+          deviceSDK: "0",
+          deviceProduct: "0",
+          deviceOsVersion: iosInfo.systemName,
+          deviceBoard: "0",
+          deviceBrand: "0",
+          deviceDisplay: "0",
+          deviceHardware: "0",
+          deviceHost: "0",
+          deviceType: "0",
+          deviceImei: imei,
+          deviceLat: lat,
+          deviceLong: long)) {
+        print("inser data device berhasil");
+      } else {
+        print("inser data device gagal");
+      }
     }
   }
 

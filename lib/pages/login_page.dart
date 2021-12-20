@@ -1,9 +1,12 @@
+
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
-
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +22,15 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKy = GlobalKey<FormState>();
   GlobalKey<ScaffoldMessengerState> scaffolMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
+  @override
+  void initState() {
+    if (Platform.isIOS) {
+      AppleSignIn.onCredentialRevoked.listen((event) {
+        print("Credentials revoked");
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +53,22 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         // Navigator.pushNamed(context, '/home');
         print("gagal login gagal");
+      }
+    }
+    // ignore: unused_element
+    handleLoginApple() async {
+      if (await AppleSignIn.isAvailable()) {
+        final AuthorizationResult result = await AppleSignIn.performRequests([AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])]);
+        switch(result.status){
+          case AuthorizationStatus.authorized: print(result.credential.user);
+          break;
+          case AuthorizationStatus.error: print("Sign In Falid: ${result.error.localizedDescription}");
+          break;
+          case AuthorizationStatus.cancelled: print('User cancelled');
+          break;
+        }
+      }else{
+
       }
     }
 
@@ -228,6 +256,28 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+    Widget loginApple() {
+      return Container(
+        height: 50,
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 30),
+        child: TextButton(
+          onPressed: handleLoginApple,
+          style: TextButton.styleFrom(
+              backgroundColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12))),
+          child:
+              // isLoading == false
+              //     ?
+              Text('Sign With Apple ID', style: wTextStyle),
+          // : CircularProgressIndicator(
+          //     strokeWidth: 2,
+          //     valueColor: AlwaysStoppedAnimation(whiteColor),
+          //   ),
+        ),
+      );
+    }
 
     Widget registrasi() {
       return Container(
@@ -268,6 +318,7 @@ class _LoginPageState extends State<LoginPage> {
                 password(),
                 loginBotton(),
                 loginEmail(),
+                loginApple(),
                 registrasi()
               ],
             ),

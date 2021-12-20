@@ -62,14 +62,17 @@ class DeviceService {
 
   // ignore: missing_return
   Future<DeviceModel> update(
-      {String userId, String lat, String long, String deviceId}) async {
+      {String userId,
+      String deviceId,
+      String deviceLat,
+      String deviceLong}) async {
     var url = '$baseUrl' + 'update_device.php';
 
     var response = await http.post(Uri.parse(url), body: {
       'userId': userId,
       'deviceId': deviceId,
-      'lat': lat,
-      'long': long
+      'deviceLat': deviceLat,
+      'deviceLong': deviceLong
     });
     if (response.statusCode == 200) {
       print(response.body);

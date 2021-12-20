@@ -1,22 +1,16 @@
-// import 'dart:convert';
 
-import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-// import 'package:my_first/model/device_model.dart';
-// import 'package:my_first/model/device_model.dart';
+import 'package:my_first/model/device_model.dart';
 import 'package:my_first/model/user_model.dart';
 import 'package:my_first/pages/member_title.dart';
-import 'package:my_first/pages/splash_page.dart';
 import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/provider/device_provider.dart';
-// import 'package:my_first/provider/device_provider.dart';
 import 'package:my_first/provider/member_provider.dart';
 import 'package:my_first/services/server.dart';
 import 'package:my_first/theme.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
-// import 'package:location/location.dart' as location;
 
 class HomePage extends StatefulWidget {
   @override
@@ -42,15 +36,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   _getCurrentLocation() async {
-    AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
     DeviceProvider deviceProvider =
         Provider.of<DeviceProvider>(context, listen: false);
+    DeviceModel dataDevice = deviceProvider.dataDevice;
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     UserModel user = authProvider.user;
     if (!mounted) return;
-    Location location = new Location();
 
+    Location location = new Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
     LocationData _locationData;
@@ -78,10 +72,16 @@ class _HomePageState extends State<HomePage> {
     });
     print("latitude : " + lat);
     print("longitude : " + long);
-    print(user.id);
-    print(androidInfo.id);
-    await deviceProvider.updateDevice(
-        userId: user.id, deviceId: androidInfo.androidId, lat: lat, long: long);
+          print(user.id);
+          if (dataDevice.deviceId != null) {
+          // print(dataDevice.deviceId);
+          await deviceProvider.updateDevice(
+              userId: user.id,
+              deviceId: dataDevice.deviceId,
+              deviceLat: lat,
+              devicelong: long);
+          }
+    
   }
 
   Future<void> _refreshMember(BuildContext context) async {
