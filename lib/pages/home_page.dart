@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:my_first/model/device_model.dart';
@@ -72,16 +71,15 @@ class _HomePageState extends State<HomePage> {
     });
     print("latitude : " + lat);
     print("longitude : " + long);
-          print(user.id);
-          if (dataDevice.deviceId != null) {
-          // print(dataDevice.deviceId);
-          await deviceProvider.updateDevice(
-              userId: user.id,
-              deviceId: dataDevice.deviceId,
-              deviceLat: lat,
-              devicelong: long);
-          }
-    
+    print(user.id);
+    if (dataDevice.deviceId != null) {
+      // print(dataDevice.deviceId);
+      await deviceProvider.updateDevice(
+          userId: user.id,
+          deviceId: dataDevice.deviceId,
+          deviceLat: lat,
+          devicelong: long);
+    }
   }
 
   Future<void> _refreshMember(BuildContext context) async {
