@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
@@ -51,25 +50,36 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushNamed(context, '/home');
         print("login berhasil");
       } else {
-        // Navigator.pushNamed(context, '/home');
         print("gagal login gagal");
       }
     }
+
     // ignore: unused_element
     handleLoginApple() async {
       if (await AppleSignIn.isAvailable()) {
-        final AuthorizationResult result = await AppleSignIn.performRequests([AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])]);
-        switch(result.status){
-          case AuthorizationStatus.authorized: print(result.credential.user);
-          break;
-          case AuthorizationStatus.error: print("Sign In Falid: ${result.error.localizedDescription}");
-          break;
-          case AuthorizationStatus.cancelled: print('User cancelled');
-          break;
+        final AuthorizationResult result = await AppleSignIn.performRequests([
+          AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+        ]);
+        switch (result.status) {
+          case AuthorizationStatus.authorized:
+            print(result.credential.user);
+            break;
+          case AuthorizationStatus.error:
+            print("Sign In Falid: ${result.error.localizedDescription}");
+            break;
+          case AuthorizationStatus.cancelled:
+            print('User cancelled');
+            break;
         }
-      }else{
 
-      }
+        if (await authProvider.loginGoogle(
+            name: result.credential.user, email: result.credential.email)) {
+          Navigator.pushNamed(context, '/home');
+          print("login berhasil");
+        } else {
+          print("gagal login gagal");
+        }
+      } else {}
     }
 
     handleLogin() async {
@@ -256,6 +266,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+
     Widget loginApple() {
       return Container(
         height: 50,

@@ -52,6 +52,18 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  Future<bool> loginApple({String name, String email}) async {
+    try {
+      UserModel user = await AuthService().loginApple(name: name, email: email);
+      _user = user;
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> login({String email, String password}) async {
     try {
       UserModel user =
