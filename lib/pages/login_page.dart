@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Widget email() {
       return Container(
-        margin: EdgeInsets.only(top: 70),
+        margin: EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -219,6 +219,29 @@ class _LoginPageState extends State<LoginPage> {
               ),
             )
           ],
+        ),
+      );
+    }
+
+    Widget loginOTP() {
+      return Container(
+        height: 50,
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 30),
+        child: TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'login-otp');
+          },
+          style: TextButton.styleFrom(
+              backgroundColor: blueColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12))),
+          child: isLoading == false
+              ? Text('Login OTP Email', style: wTextStyle)
+              : CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation(whiteColor),
+                ),
         ),
       );
     }
@@ -330,7 +353,8 @@ class _LoginPageState extends State<LoginPage> {
                 loginBotton(),
                 loginEmail(),
                 loginApple(),
-                registrasi()
+                loginOTP(),
+                registrasi(),
               ],
             ),
           ),
