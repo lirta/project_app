@@ -39,7 +39,7 @@ dependencies:
   google_sign_in: ^4.5.9
   apple_sign_in: ^0.1.0
   email_auth: 
-  cotter:
+  
 
 dev_dependencies:
   flutter_test:

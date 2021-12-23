@@ -257,7 +257,7 @@ class AuthService {
       Uri.parse(url),
       body: body,
     );
-    // print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['user'];
       UserModel user = UserModel.fromJson(data);

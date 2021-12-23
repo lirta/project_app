@@ -1,6 +1,9 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first/provider/auth_provider.dart';
 import 'package:my_first/theme.dart';
 import 'package:email_auth/email_auth.dart';
+import 'package:provider/provider.dart';
 
 class LoginOtp extends StatefulWidget {
   @override
@@ -14,11 +17,28 @@ class _LoginOtpState extends State<LoginOtp> {
   EmailAuth emailAuth = new EmailAuth(sessionName: "simple session");
 
   void sendOTP() async {
-    var result = await emailAuth.sendOtp(recipientMail: emailController.text);
-    if (result) {
-      print("send");
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+    if (await authProvider.getuser(email: emailController.text)) {
+      var result = await emailAuth.sendOtp(recipientMail: emailController.text);
+      if (result) {
+        print("send");
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: blueColor,
+          message: 'Periksa Email anda, OTP terkirim',
+        ).show(context);
+      } else {
+        print("error");
+      }
     } else {
-      print("error");
+      Flushbar(
+        duration: Duration(seconds: 4),
+        flushbarPosition: FlushbarPosition.TOP,
+        backgroundColor: Color(0xffff5c83),
+        message: 'Email anda belum terdaftar',
+      ).show(context);
     }
   }
 
@@ -26,9 +46,14 @@ class _LoginOtpState extends State<LoginOtp> {
     var result = emailAuth.validateOtp(
         recipientMail: emailController.text, userOtp: otpController.text);
     if (result) {
-      print("otp verified");
+      Navigator.pushNamed(context, '/home');
     } else {
-      print("invalid");
+      Flushbar(
+        duration: Duration(seconds: 4),
+        flushbarPosition: FlushbarPosition.TOP,
+        backgroundColor: Color(0xffff5c83),
+        message: 'Gagal verified OTP',
+      ).show(context);
     }
   }
 
@@ -131,7 +156,7 @@ class _LoginOtpState extends State<LoginOtp> {
                         child: TextField(
                       controller: otpController,
                       style: bTextStyle,
-                      obscureText: true,
+                      // obscureText: true,
                       decoration: InputDecoration.collapsed(hintText: 'OTP'),
                     ))
                   ],
